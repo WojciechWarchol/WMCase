@@ -11,6 +11,7 @@ public interface Service {
 	public List<Client> getClients ();
 	public List<Order> getOrders (int theId);
 	public List<Case> getCases (int theId);
+	public Case getCase(int theId);
 	
 	public void saveCase(Case theCase);
 	public void deleteCase(int theId);

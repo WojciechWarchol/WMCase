@@ -47,6 +47,12 @@ public class ServiceImpl implements Service {
 	
 	@Override
 	@Transactional
+	public Case getCase(int theId) {
+		return caseDAOImpl.getCase(theId);
+	}
+
+	@Override
+	@Transactional
 	public void saveCase(Case theCase) {
 		caseDAO.saveCase(theCase);
 	}

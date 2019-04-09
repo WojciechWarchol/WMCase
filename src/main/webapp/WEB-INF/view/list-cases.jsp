@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!-- The below enabled Polish character rendering -->
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 
 <!DOCTYPE html>
 
@@ -9,6 +11,8 @@
 	<title>WMCASE - skrzynki</title>
 	<meta charset="UTF-8">
 	
+	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+	<!-- 
 	<link type="text/css"
 		rel="stylesheet"
 		href="${pageContext.request.contextPath}/resources/css/style.css">
@@ -16,6 +20,7 @@
 	<link type="text/css"
 		rel="stylesheet"
 			href="${pageContext.request.contextPath}/resources/css/add-case-style.css">
+			-->
 </head>
 
 <body>
@@ -30,7 +35,9 @@
 	
 		<div id="content">
 		
-		
+		<input type="button" value="Dodaj skrzynkę"
+			onclick="window.location.href='newCase'; return false;"
+			class="add-button"/>
 		
 			<table>
 				<tr>
@@ -45,9 +52,19 @@
                     <th>Zamki</th>
 					<th>Uwagi</th>
 					<th>Cena</th>
+					<th>Usuń | Modyfikuj</th>
 				</tr>
 				
 				<c:forEach var="tempCase" items="${cases}">
+				
+				<!-- Update and delete Links -->
+				<c:url var="updateLink" value="/updateCase">
+					<c:param name="caseId" value="${tempCase.id}"/>
+				</c:url>
+				
+				<c:url var="deleteLink" value="/deleteCase">
+					<c:param name="caseId" value="${tempCase.id}"/>
+				</c:url>
 					
 					<tr>
 						<td> ${tempCase.length} x ${tempCase.width} x ${tempCase.height} mm</td>
@@ -61,6 +78,13 @@
                         <td> ${tempCase.locks.getLocks()}
 						<td> ${tempCase.comments}</td>
 						<td> ${tempCase.price}</td>
+						<td>
+							<a href="${deleteLink}" 
+							onclick="if (!(confirm('Czy na pewno chcesz usunąć skrzynkę?'))) return false">
+							Usuń</a>
+							 | 
+							<a href="${updateLink}">Modyfikuj</a>
+						<td>
 					</tr>
 						
 				</c:forEach>

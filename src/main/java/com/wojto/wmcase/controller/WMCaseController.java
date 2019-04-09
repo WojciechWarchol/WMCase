@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mysql.cj.xdevapi.CreateIndexParams;
 import com.wojto.wmcase.entity.Case;
@@ -74,10 +75,28 @@ public class WMCaseController {
 		return "new-case";
 	}
 	
+	@GetMapping("/updateCase")
+	public String updateCase(@RequestParam("caseId") int theId, Model theModel) {
+		
+		Case theCase = service.getCase(theId);
+		
+		theModel.addAttribute("case", theCase);
+		
+		return "new-case";
+	}
+	
 	@PostMapping("/saveCase")
 	public String saveCase(@ModelAttribute("case") Case theCase) {
 		
 		service.saveCase(theCase);
+		
+		return "redirect:/caseList";
+	}
+	
+	@GetMapping("/deleteCase")
+	public String deleteCase(@RequestParam("caseId") int theId) {
+		
+		service.deleteCase(theId);
 		
 		return "redirect:/caseList";
 	}

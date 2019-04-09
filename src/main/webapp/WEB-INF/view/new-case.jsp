@@ -10,9 +10,14 @@
 <head>
 	<title>WMCASE - skrzynki</title>
 	
+	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+	<!--  
+	<link href="resources/css/style.css" rel="stylesheet" type="text/css">
+	 		-->
 	<link type="text/css"
 		rel= "stylesheet"
 		href="${pageContext.request.contextPath}/resources/css/style.css" />
+
 </head>
 
 
@@ -111,11 +116,11 @@
 			</table>
 			
 		</form:form>
-		
+
 		<div style="clear; both;"></div>
 		
 		<p>
-			<a href="${pageContext.request.contextPath}">Wróć do skrzynek</a>
+			<a href="${pageContext.request.contextPath}/caseList">Wróć do skrzynek</a>
 		</p>
 		
 		
