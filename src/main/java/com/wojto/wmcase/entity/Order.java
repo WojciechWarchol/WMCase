@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,9 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 import com.wojto.wmcase.enums.OrderStatus;
 
 @Entity
+@Proxy(lazy=false)  // test
 @Table(name="orders")
 public class Order {
 	
@@ -33,7 +38,7 @@ public class Order {
 	private String comments;
 	@Column(name="charge")
 	private double charge;
-	@Column(name="order_status")
+	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
 	
 	// konstruktory
@@ -78,6 +83,10 @@ public class Order {
 	}
 
 	public double getCharge() {
+		double charge = 0;
+		for(Case tempCase : cases) {
+			charge += tempCase.getPrice();
+		}
 		return charge;
 	}
 

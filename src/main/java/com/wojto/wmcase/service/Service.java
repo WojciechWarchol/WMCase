@@ -8,9 +8,14 @@ import com.wojto.wmcase.entity.Order;
 
 public interface Service {
 
-	public List<Client> getClients ();
-	public List<Order> getOrders (int theId);
-	public List<Case> getCases (int theId);
+	public List<Client> getAllClients ();
+	public List<Order> getAllOrders ();
+	public List<Case> getAllCases ();
+	
+	public List<Case> getCasesForOrder(int theId);
+	public List<Order> getOrdersForClient(int theId);
+	
+	public Order getOrder(int theId);
 	public Case getCase(int theId);
 	
 	public void saveCase(Case theCase);

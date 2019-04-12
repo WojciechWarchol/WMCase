@@ -20,7 +20,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages="com.wojto.wmcase")
-@PropertySource("classpath:persistence-mysql-jdbc.properties")
+//@PropertySource("classpath:persistence-mysql-jdbc.properties")
 public class SpringConfig implements WebMvcConfigurer {
 
 //	@Autowired

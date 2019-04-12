@@ -44,22 +44,42 @@
 					<th>Komentarz</th>
 					<th>Wartość</th>
                     <th>Status</th>
+                    <th>Akcja</th>
 				</tr>
 				
 				<c:forEach var="tempOrder" items="${orders}">
+				
+				<!-- Update and delete Links -->
+				<c:url var="updateLink" value="/updateOrder">
+					<c:param name="orderId" value="${tempOrder.id}"/>
+					<%-- <c:param name="theOrder" items="${tempOrder}"/> --%>
+				</c:url>
+				
+				<c:url var="deleteLink" value="/deleteCase">
+					<c:param name="orderId" value="${tempOrder.id}"/>
+				</c:url>
 					
 					<tr>
 						<td> ${tempOrder.id}</td>
-						<td> ${tempOrder.id}</td>
+						<td> ${tempOrder.getCases().size()}</td>
 						<td> ${tempOrder.comments}</td>
 						<td> ${tempOrder.charge}</td>
-						<td> ${tempOrder.order_status}</td>
+						<td> ${tempOrder.getOrderStatus()}</td>
+						<td> 
+							<a href="${updateLink}">Modyfikuj</a>
+							 | 
+							<a href="${deleteLink}" 
+							onclick="if (!(confirm('Czy na pewno chcesz usunąć skrzynkę?'))) return false">
+							Usuń</a>
+						<td>
 
 					</tr>
 						
 				</c:forEach>
 				
 			</table>
+		
+			<a href="${pageContext.request.contextPath}/clientList">Wróć do klientów</a>		
 		
 		</div>
 	

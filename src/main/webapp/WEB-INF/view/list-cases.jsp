@@ -10,17 +10,17 @@
 <head>
 	<title>WMCASE - skrzynki</title>
 	<meta charset="UTF-8">
-	
+
 	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-	<!-- 
+		<!-- 
 	<link type="text/css"
 		rel="stylesheet"
 		href="${pageContext.request.contextPath}/resources/css/style.css">
-
+			
 	<link type="text/css"
 		rel="stylesheet"
 			href="${pageContext.request.contextPath}/resources/css/add-case-style.css">
-			-->
+-->
 </head>
 
 <body>
@@ -52,7 +52,7 @@
                     <th>Zamki</th>
 					<th>Uwagi</th>
 					<th>Cena</th>
-					<th>Usuń | Modyfikuj</th>
+					<th>Akcja</th>
 				</tr>
 				
 				<c:forEach var="tempCase" items="${cases}">
@@ -60,6 +60,7 @@
 				<!-- Update and delete Links -->
 				<c:url var="updateLink" value="/updateCase">
 					<c:param name="caseId" value="${tempCase.id}"/>
+			<%--    <c:param name="theOrder" value="${theOrder}"/> --%>
 				</c:url>
 				
 				<c:url var="deleteLink" value="/deleteCase">
@@ -79,17 +80,20 @@
 						<td> ${tempCase.comments}</td>
 						<td> ${tempCase.price}</td>
 						<td>
+							<a href="${updateLink}">Modyfikuj</a>
+							 | 
 							<a href="${deleteLink}" 
 							onclick="if (!(confirm('Czy na pewno chcesz usunąć skrzynkę?'))) return false">
 							Usuń</a>
-							 | 
-							<a href="${updateLink}">Modyfikuj</a>
 						<td>
+						
 					</tr>
 						
 				</c:forEach>
 				
 			</table>
+		
+			<a href="${pageContext.request.contextPath}/orderList">Wróć do zamówień</a>
 		
 		</div>
 	

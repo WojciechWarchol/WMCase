@@ -56,7 +56,7 @@ public class CaseDAOImpl implements CaseDAO {
 	}
 	
 	// Do celów testowych
-	public List<Case> getCases(int theId) {
+	public List<Case> getCases() {
 		
 		Session currentSession = sessionFactory.getCurrentSession();
 		

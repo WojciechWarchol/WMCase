@@ -10,6 +10,7 @@ import com.wojto.wmcase.dao.CaseDAO;
 import com.wojto.wmcase.dao.CaseDAOImpl;
 import com.wojto.wmcase.dao.ClientDAO;
 import com.wojto.wmcase.dao.OrderDAO;
+import com.wojto.wmcase.dao.OrderDAOImpl;
 import com.wojto.wmcase.entity.Case;
 import com.wojto.wmcase.entity.Client;
 import com.wojto.wmcase.entity.Order;
@@ -23,28 +24,50 @@ public class ServiceImpl implements Service {
 	private OrderDAO orderDAO;
 	@Autowired
 	private ClientDAO clientDAO;
-	// do usuniecia
+	// two below for testing
 	@Autowired
 	private CaseDAOImpl caseDAOImpl;
+	@Autowired
+	private OrderDAOImpl orderDAOImpl;
 
 	@Override
 	@Transactional
-	public List<Client> getClients() {
+	public List<Client> getAllClients() {
 		return clientDAO.getClients();
 	}
-
+	
+	// two below for testing
 	@Override
 	@Transactional
-	public List<Order> getOrders(int theId) {
-		return clientDAO.getOrders(theId);
+	public List<Order> getAllOrders() {
+		return orderDAOImpl.getOrders();
 	}
 
 	@Override
 	@Transactional
-	public List<Case> getCases(int theId) {
-		return caseDAOImpl.getCases(theId);
+	public List<Case> getAllCases() {
+		return caseDAOImpl.getCases();
 	}
 	
+	@Override
+	@Transactional
+	public Order getOrder(int theId) {
+		return orderDAOImpl.getOrder(theId);
+	}
+
+	@Override
+	@Transactional
+	public List<Case> getCasesForOrder(int theId) {
+		return orderDAO.getCases(theId);
+	}
+
+	@Override
+	@Transactional
+	public List<Order> getOrdersForClient(int theId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Override
 	@Transactional
 	public Case getCase(int theId) {

@@ -32,33 +32,70 @@ public class WMCaseController {
 		return "hello";
 	}
 	
-//	@GetMapping("/clientList")
-//	public String listClients(Model theModel) {
-//		
-//		List<Client> theClients = 
-//				service.getClients();
-//		
-//		theModel.addAttribute("clients", theClients);
-//		
-//		return "list-clients";
-//	}
-//	
-//	@GetMapping("/orderList")
-//	public String listOrder(Model theModel) {
-//		
-//		List<Order> theOrders =
-//				service.getOrders(1);
-//		
-//		theModel.addAttribute("orders", theOrders);
-//		
-//		return "list-orders";
-//	}
+	@GetMapping("/clientList")
+	public String listClients(Model theModel) {
+		
+		List<Client> theClients = 
+				service.getAllClients();
+		
+		theModel.addAttribute("clients", theClients);
+		
+		return "list-clients";
+	}
+
+	@GetMapping("/clientOrders")
+	public String clientOrders(@RequestParam("clientId") int theId, Model theModel) {
+		
+		List<Order> theOrders = service.getOrdersForClient(theId);
+		
+		theModel.addAttribute("orders",theOrders);
+		
+		return "list-orders";
+	}
+	
+	@GetMapping("/deleteClient")
+	public String deleteClient(@RequestParam("clientId") int theId) {
+		
+		service.deleteClient(theId);
+		
+		return "redirect:/clientList";
+	}
+	
+	@GetMapping("/orderList")
+	public String listOrders(Model theModel) {
+		List<Order> theOrders = service.getAllOrders();
+		
+	theModel.addAttribute("orders", theOrders);
+	
+	return "list-orders";
+	}
+	
+	@GetMapping("/updateOrder")
+	public String updateOrder(@RequestParam("orderId") int theId, 
+//							  @RequestParam("theOrder") Order theOrder,
+								Model theModel) {
+		
+		List<Case> theCases = service.getCasesForOrder(theId);
+		
+		theModel.addAttribute("cases", theCases);
+		theModel.addAttribute("orderId", theId);
+		
+		return "list-cases";
+	}
+	
+	@GetMapping("/deleteOrder")
+	public String deleteOrder(@RequestParam("orderId") int theId) {
+		
+		service.deleteOrder(theId);
+		
+		return "redirect:/orderList";
+	}
 	
 	@GetMapping("/caseList")
 	public String listCases(Model theModel) {
 		
 		List<Case> theCases = 
-				service.getCases(1);
+				service.getAllCases();
 		
 		theModel.addAttribute("cases", theCases);
 		
@@ -76,17 +113,23 @@ public class WMCaseController {
 	}
 	
 	@GetMapping("/updateCase")
-	public String updateCase(@RequestParam("caseId") int theId, Model theModel) {
+	public String updateCase(@RequestParam("caseId") int theId, 
+							 @RequestParam("orderId") int orderId,
+							 Model theModel) {
 		
 		Case theCase = service.getCase(theId);
 		
 		theModel.addAttribute("case", theCase);
+		theModel.addAttribute("orderId", orderId);
 		
 		return "new-case";
 	}
 	
 	@PostMapping("/saveCase")
-	public String saveCase(@ModelAttribute("case") Case theCase) {
+	public String saveCase(@ModelAttribute("case") Case theCase,
+						   @RequestParam("orderId") int orderId) {
+		
+		theCase.setOrder(service.getOrder(orderId));	
 		
 		service.saveCase(theCase);
 		
@@ -101,14 +144,6 @@ public class WMCaseController {
 		return "redirect:/caseList";
 	}
 	
-	@GetMapping("/showCaseAddForm")
-	public String showCaseAddForm(Model theModel) {
-		
-		Case theCase = new Case();
-		
-		theModel.addAttribute("case", theCase);
-		
-		return "case-form";
-	}
+
 	
 }

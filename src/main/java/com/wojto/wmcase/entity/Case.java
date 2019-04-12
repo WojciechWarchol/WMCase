@@ -1,5 +1,6 @@
 package com.wojto.wmcase.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,7 +8,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Proxy;
 
 import com.wojto.wmcase.enums.Color;
 import com.wojto.wmcase.enums.Material;
@@ -18,6 +23,7 @@ import com.wojto.wmcase.enums.Locks;
 
 
 @Entity
+@Proxy(lazy=false)
 @Table(name="cases")
 public class Case {
 
@@ -60,6 +66,12 @@ public class Case {
 	private String comments;
 	@Column(name="price")
 	private double price;
+	
+	// Testing a bi-directional relationship
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, 
+						CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinColumn(name="order_id")
+	private Order order;
 
 	
 	// konstruktor(y)
@@ -230,6 +242,14 @@ public class Case {
 		if (price > 0) {
 		this.price = price;
 		}
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	// Inne metody

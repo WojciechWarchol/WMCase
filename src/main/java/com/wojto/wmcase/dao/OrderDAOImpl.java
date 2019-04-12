@@ -23,7 +23,8 @@ public class OrderDAOImpl implements OrderDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		
 		Query<Order> theQuery = 
-				currentSession.createQuery("from Order order by id", Order.class);
+				currentSession.createQuery("from Order o where o.id = :orderId", Order.class)
+				.setParameter("orderId", theId);
 		
 		Order theOrder = theQuery.getResultList().get(0);
 		
@@ -36,9 +37,12 @@ public class OrderDAOImpl implements OrderDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		
 		Query<Case> theQuery =
-				currentSession.createQuery("from Case where id=:orderId order by id", Case.class);
+				currentSession.createQuery("FROM Case c JOIN FETCH c.order o where o.id = :orderId", Case.class);
 		theQuery.setParameter("orderId", theId);
 		List<Case> cases = theQuery.getResultList();
+		
+		//"from Case where id=:orderId order by id"
+		//"select c FROM Order o JOIN o.cases c WHERE :orderId = cId"
 		
 		return cases;
 	}
@@ -62,6 +66,23 @@ public class OrderDAOImpl implements OrderDAO {
 		theQuery.setParameter("orderId", theId);
 		theQuery.executeUpdate();
 
+	}
+	
+	// Do celów testowych
+	public List<Order> getOrders() {
+		
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Query<Order> theQuery =
+				currentSession.createQuery("SELECT DISTINCT o FROM Order o JOIN FETCH o.cases c", Order.class);
+//						+ "where o.cases = :cases", Order.class)
+//				.setParameter("orderId", );
+
+		System.out.println("+++++++++++++++++++++");
+		System.out.println(theQuery);
+		List<Order> orders = theQuery.getResultList();
+		
+		return orders;
 	}
 
 }
