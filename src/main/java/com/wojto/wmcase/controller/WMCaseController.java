@@ -103,9 +103,11 @@ public class WMCaseController {
 	}
 	
 	@GetMapping("/newCase")
-	public String createNewCase(Model theModel) {
+	public String createNewCase(@RequestParam("orderId") int orderId,
+								Model theModel) {
 		
 		Case theCase = new Case();
+		theCase.setOrder(service.getOrder(orderId));
 		
 		theModel.addAttribute("case", theCase);
 		
@@ -120,7 +122,6 @@ public class WMCaseController {
 		Case theCase = service.getCase(theId);
 		
 		theModel.addAttribute("case", theCase);
-		theModel.addAttribute("orderId", orderId);
 		
 		return "new-case";
 	}
