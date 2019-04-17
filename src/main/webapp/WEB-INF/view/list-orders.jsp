@@ -12,15 +12,7 @@
 	<meta charset="UTF-8">
 	
 	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-	<!-- 
-	<link type="text/css"
-		rel="stylesheet"
-		href="${pageContext.request.contextPath}/resources/css/style.css">
 
-	<link type="text/css"
-		rel="stylesheet"
-			href="${pageContext.request.contextPath}/resources/css/add-case-style.css">
-			-->
 </head>
 
 <body>

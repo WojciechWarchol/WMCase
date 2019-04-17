@@ -35,6 +35,7 @@
 		<form:form action="saveCase" modelAttribute="case" method="POST">
 			
 			<form:hidden path="id"/>
+			<input name="orderId" type="hidden" value="${orderId}"/>
 		<%-- <form:hidden path="order" value="${theOrder}"/> --%>
 			
 			<!-- Needs a Controller method -->

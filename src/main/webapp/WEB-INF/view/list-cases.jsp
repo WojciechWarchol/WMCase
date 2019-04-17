@@ -12,15 +12,7 @@
 	<meta charset="UTF-8">
 
 	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-		<!-- 
-	<link type="text/css"
-		rel="stylesheet"
-		href="${pageContext.request.contextPath}/resources/css/style.css">
-			
-	<link type="text/css"
-		rel="stylesheet"
-			href="${pageContext.request.contextPath}/resources/css/add-case-style.css">
--->
+
 </head>
 
 <body>
@@ -34,10 +26,17 @@
 	<div id="container">
 	
 		<div id="content">
-		
+
+			<form:form action="newCase" method="GET">
+				<input name="orderId" type="hidden" value="${orderId}"/>
+				<input type="submit" value="Dodaj Skrzynkę" class="add-button" />
+			</form:form>
+
+			<!-- 
 		<input type="button" value="Dodaj skrzynkę"
 			onclick="window.location.href='newCase'; return false;"
 			class="add-button"/>
+			-->
 		
 			<table>
 				<tr>
@@ -60,6 +59,7 @@
 				<!-- Update and delete Links -->
 				<c:url var="updateLink" value="/updateCase">
 					<c:param name="caseId" value="${tempCase.id}"/>
+					<c:param name="orderId" value="${orderId}" />
 			<%--    <c:param name="theOrder" value="${theOrder}"/> --%>
 				</c:url>
 				

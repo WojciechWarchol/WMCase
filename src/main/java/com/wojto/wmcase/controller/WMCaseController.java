@@ -79,6 +79,7 @@ public class WMCaseController {
 		
 		theModel.addAttribute("cases", theCases);
 		theModel.addAttribute("orderId", theId);
+		System.out.println("The Case Id is: " + theId);
 		
 		return "list-cases";
 	}
@@ -107,9 +108,10 @@ public class WMCaseController {
 								Model theModel) {
 		
 		Case theCase = new Case();
-		theCase.setOrder(service.getOrder(orderId));
 		
 		theModel.addAttribute("case", theCase);
+		theModel.addAttribute("orderId", orderId);
+		System.out.println("The order Is (in newCase) is: " + orderId);
 		
 		return "new-case";
 	}
@@ -122,6 +124,7 @@ public class WMCaseController {
 		Case theCase = service.getCase(theId);
 		
 		theModel.addAttribute("case", theCase);
+		theModel.addAttribute("orderId", orderId);
 		
 		return "new-case";
 	}
@@ -134,6 +137,7 @@ public class WMCaseController {
 		
 		service.saveCase(theCase);
 		
+		// was "redirect:/caseList"
 		return "redirect:/caseList";
 	}
 	
@@ -142,6 +146,7 @@ public class WMCaseController {
 		
 		service.deleteCase(theId);
 		
+
 		return "redirect:/caseList";
 	}
 	
