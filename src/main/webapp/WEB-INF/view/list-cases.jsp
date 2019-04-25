@@ -29,6 +29,7 @@
 
 			<form:form action="newCase" method="GET">
 				<input name="orderId" type="hidden" value="${orderId}"/>
+				<input name="clientId" type="hidden" value="${clientId}"/>
 				<input type="submit" value="Dodaj Skrzynkę" class="add-button" />
 			</form:form>
 
@@ -60,11 +61,14 @@
 				<c:url var="updateLink" value="/updateCase">
 					<c:param name="caseId" value="${tempCase.id}"/>
 					<c:param name="orderId" value="${orderId}" />
+					<c:param name="clientId" value="${clientId}"/>
 			<%--    <c:param name="theOrder" value="${theOrder}"/> --%>
 				</c:url>
 				
 				<c:url var="deleteLink" value="/deleteCase">
 					<c:param name="caseId" value="${tempCase.id}"/>
+					<c:param name="orderId" value="${orderId}" />
+					<c:param name="clientId" value="${clientId}"/>
 				</c:url>
 					
 					<tr>
@@ -93,7 +97,7 @@
 				
 			</table>
 		
-			<a href="${pageContext.request.contextPath}/orderList">Wróć do zamówień</a>
+			<a href="${pageContext.request.contextPath}/clientOrders?clientId=${clientId}">Wróć do zamówień</a>
 		
 		</div>
 	

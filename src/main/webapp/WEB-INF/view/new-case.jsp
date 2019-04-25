@@ -36,6 +36,7 @@
 			
 			<form:hidden path="id"/>
 			<input name="orderId" type="hidden" value="${orderId}"/>
+			<input name="clientId" type="hidden" value="${clientId}"/>
 		<%-- <form:hidden path="order" value="${theOrder}"/> --%>
 			
 			<!-- Needs a Controller method -->
@@ -122,7 +123,7 @@
 		<div style="clear; both;"></div>
 		
 		<p>
-			<a href="${pageContext.request.contextPath}/caseList">Wróć do skrzynek</a>
+			<a href="${pageContext.request.contextPath}/updateOrder?clientId=${clientId}&orderId=${orderId}">Wróć do skrzynek</a>
 		</p>
 		
 		

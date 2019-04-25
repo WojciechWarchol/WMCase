@@ -49,7 +49,7 @@ public class ClientDAOImpl implements ClientDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		
 		Query<Order> theQuery =
-				currentSession.createQuery("from Order where id=:clientId order by id", Order.class);
+				currentSession.createQuery("SELECT DISTINCT o FROM Order o JOIN FETCH o.client c JOIN FETCH o.cases WHERE c.id = :clientId", Order.class);
 		theQuery.setParameter("clientId", theId);
 		List<Order> orders = theQuery.getResultList();
 		

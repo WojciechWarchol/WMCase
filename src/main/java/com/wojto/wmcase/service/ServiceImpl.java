@@ -2,7 +2,7 @@ package com.wojto.wmcase.service;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -64,8 +64,7 @@ public class ServiceImpl implements Service {
 	@Override
 	@Transactional
 	public List<Order> getOrdersForClient(int theId) {
-		// TODO Auto-generated method stub
-		return null;
+		return clientDAO.getOrders(theId);
 	}
 
 	@Override

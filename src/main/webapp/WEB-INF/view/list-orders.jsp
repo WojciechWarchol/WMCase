@@ -44,10 +44,11 @@
 				<!-- Update and delete Links -->
 				<c:url var="updateLink" value="/updateOrder">
 					<c:param name="orderId" value="${tempOrder.id}"/>
+					<c:param name="clientId" value="${clientId}"/>
 					<%-- <c:param name="theOrder" items="${tempOrder}"/> --%>
 				</c:url>
 				
-				<c:url var="deleteLink" value="/deleteCase">
+				<c:url var="deleteLink" value="/deleteOrder">
 					<c:param name="orderId" value="${tempOrder.id}"/>
 				</c:url>
 					

@@ -1,6 +1,6 @@
 package com.wojto.wmcase.entity;
 
-import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -40,6 +41,13 @@ public class Order {
 	private double charge;
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
+	@Column(name="date")
+	private Date date;
+	
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+						 CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinColumn(name="client_id")
+	private Client client;
 	
 	// konstruktory
 	public Order() {
@@ -104,6 +112,22 @@ public class Order {
 		this.orderStatus = orderStatus;
 	}
 	
+	Date getDate() {
+		return date;
+	}
+
+	void setDate(Date date) {
+		this.date = date;
+	}
+
+	Client getClient() {
+		return client;
+	}
+
+	void setClient(Client client) {
+		this.client = client;
+	}
+
 	// Inne metody
 	public boolean addCase(Case skrzynka) {
 		if(skrzynka != null) {

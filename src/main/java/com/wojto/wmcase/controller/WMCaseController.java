@@ -48,7 +48,8 @@ public class WMCaseController {
 		
 		List<Order> theOrders = service.getOrdersForClient(theId);
 		
-		theModel.addAttribute("orders",theOrders);
+		theModel.addAttribute("orders", theOrders);
+		theModel.addAttribute("clientId", theId);
 		
 		return "list-orders";
 	}
@@ -72,13 +73,14 @@ public class WMCaseController {
 	
 	@GetMapping("/updateOrder")
 	public String updateOrder(@RequestParam("orderId") int theId, 
-//							  @RequestParam("theOrder") Order theOrder,
+							  @RequestParam("clientId") int clientId,
 								Model theModel) {
 		
 		List<Case> theCases = service.getCasesForOrder(theId);
 		
 		theModel.addAttribute("cases", theCases);
 		theModel.addAttribute("orderId", theId);
+		theModel.addAttribute("clientId", clientId);
 		System.out.println("The Case Id is: " + theId);
 		
 		return "list-cases";
@@ -105,12 +107,14 @@ public class WMCaseController {
 	
 	@GetMapping("/newCase")
 	public String createNewCase(@RequestParam("orderId") int orderId,
+								@RequestParam("clientId") int clientId,
 								Model theModel) {
 		
 		Case theCase = new Case();
 		
 		theModel.addAttribute("case", theCase);
 		theModel.addAttribute("orderId", orderId);
+		theModel.addAttribute("clientId", clientId);
 		System.out.println("The order Is (in newCase) is: " + orderId);
 		
 		return "new-case";
@@ -119,35 +123,45 @@ public class WMCaseController {
 	@GetMapping("/updateCase")
 	public String updateCase(@RequestParam("caseId") int theId, 
 							 @RequestParam("orderId") int orderId,
+							 @RequestParam("clientId") int clientId,
 							 Model theModel) {
 		
 		Case theCase = service.getCase(theId);
 		
 		theModel.addAttribute("case", theCase);
 		theModel.addAttribute("orderId", orderId);
+		theModel.addAttribute("clientId", clientId);
 		
 		return "new-case";
 	}
 	
 	@PostMapping("/saveCase")
 	public String saveCase(@ModelAttribute("case") Case theCase,
-						   @RequestParam("orderId") int orderId) {
+						   @RequestParam("orderId") int orderId,
+						   @RequestParam("clientId") int clientId,
+						   Model theModel) {
 		
 		theCase.setOrder(service.getOrder(orderId));	
 		
 		service.saveCase(theCase);
+		theModel.addAttribute("orderId", orderId);
+		theModel.addAttribute("clientId", clientId);
 		
 		// was "redirect:/caseList"
-		return "redirect:/caseList";
+		return "redirect:/updateOrder";
 	}
 	
 	@GetMapping("/deleteCase")
-	public String deleteCase(@RequestParam("caseId") int theId) {
+	public String deleteCase(@RequestParam("caseId") int theId,
+							 @RequestParam("orderId") int orderId, 
+							 @RequestParam("clientId") int clientId,
+							 Model theModel) {
 		
 		service.deleteCase(theId);
-		
+		theModel.addAttribute("orderId", orderId);
+		theModel.addAttribute("clientId", clientId);
 
-		return "redirect:/caseList";
+		return "redirect:/updateOrder";
 	}
 	
 
