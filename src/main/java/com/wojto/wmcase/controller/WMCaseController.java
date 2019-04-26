@@ -118,7 +118,7 @@ public class WMCaseController {
 		theModel.addAttribute("case", theCase);
 		theModel.addAttribute("orderId", orderId);
 		theModel.addAttribute("clientId", clientId);
-		System.out.println("The order Is (in newCase) is: " + orderId);
+		System.out.println("The order ID (in newCase) is: " + orderId);
 		
 		return "new-case";
 	}
@@ -150,7 +150,6 @@ public class WMCaseController {
 		theModel.addAttribute("orderId", orderId);
 		theModel.addAttribute("clientId", clientId);
 		
-		// was "redirect:/caseList"
 		return "redirect:/updateOrder";
 	}
 	
@@ -167,6 +166,58 @@ public class WMCaseController {
 		return "redirect:/updateOrder";
 	}
 	
-
+	// Client side order with cases creation
+	
+	@GetMapping("/newClientOrder")
+	public String createNewOrder(Model theModel) {
+		
+		Order theOrder = new Order();
+		System.out.println(theOrder.getId());
+		theModel.addAttribute("order", theOrder);
+		
+		return "new-full-order";
+	}
+	
+	@GetMapping("/continueOrder")
+	public String continueOrder(@RequestParam("order") Order theOrder,
+								Model theModel) {
+		
+		return "new-full-order";
+	}
+	
+	@PostMapping("/sendOrder")
+	public String sendOrder(@RequestParam("client") Client theClient,
+							@RequestParam("order") Order theOrder,
+							Model theModel) {
+		
+		theOrder.setClient(theClient);
+		service.saveOrder(theOrder);
+		
+		return "list-clients";
+	}
+	
+	@GetMapping("/newCaseInOrder")
+	public String createNewCaseInOrder(@RequestParam("order") Order theOrder,
+										Model theModel) {
+		
+		Case theCase = new Case();
+		
+		theModel.addAttribute("case", theCase);
+		theModel.addAttribute("order", theOrder);
+		
+		return "new-case-in-order";
+	}
+	
+	@PostMapping("/addCaseToOrder")
+	public String addCaseToOrder(@ModelAttribute("case") Case theCase,
+								 @RequestParam("order") Order theOrder,
+								 Model theModel) {
+		
+		theOrder.addCase(theCase);
+		
+		theModel.addAttribute("order", theOrder);
+		
+		return "redirect:/continueOrder";
+	}
 	
 }

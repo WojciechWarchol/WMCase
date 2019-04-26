@@ -21,11 +21,6 @@ public class CaseDAOImpl implements CaseDAO {
 		
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-//		Query<Case> theQuery = 
-//				currentSession.createQuery("from Case order by id", Case.class);
-//		
-//		Case theCase = theQuery.getResultList().get(0);
-		
 		Case theCase = currentSession.get(Case.class, theId);
 		
 		return theCase;

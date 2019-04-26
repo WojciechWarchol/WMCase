@@ -41,9 +41,6 @@ public class OrderDAOImpl implements OrderDAO {
 		theQuery.setParameter("orderId", theId);
 		List<Case> cases = theQuery.getResultList();
 		
-		//"from Case where id=:orderId order by id"
-		//"select c FROM Order o JOIN o.cases c WHERE :orderId = cId"
-		
 		return cases;
 	}
 
@@ -75,8 +72,6 @@ public class OrderDAOImpl implements OrderDAO {
 		
 		Query<Order> theQuery =
 				currentSession.createQuery("SELECT DISTINCT o FROM Order o JOIN FETCH o.cases c", Order.class);
-//						+ "where o.cases = :cases", Order.class)
-//				.setParameter("orderId", );
 
 		System.out.println("+++++++++++++++++++++");
 		System.out.println(theQuery);

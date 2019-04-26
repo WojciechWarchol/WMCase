@@ -31,6 +31,7 @@
 		
 			<table>
 				<tr>
+					<th>Data zamówienia</th>
 					<th>Numer zamówienia</th>
 					<th>Liczba skrzynek</th>
 					<th>Komentarz</th>
@@ -45,7 +46,6 @@
 				<c:url var="updateLink" value="/updateOrder">
 					<c:param name="orderId" value="${tempOrder.id}"/>
 					<c:param name="clientId" value="${clientId}"/>
-					<%-- <c:param name="theOrder" items="${tempOrder}"/> --%>
 				</c:url>
 				
 				<c:url var="deleteLink" value="/deleteOrder">
@@ -54,6 +54,7 @@
 				</c:url>
 					
 					<tr>
+						<td> ${tempOrder.date}</td>
 						<td> ${tempOrder.id}</td>
 						<td> ${tempOrder.getCases().size()}</td>
 						<td> ${tempOrder.comments}</td>

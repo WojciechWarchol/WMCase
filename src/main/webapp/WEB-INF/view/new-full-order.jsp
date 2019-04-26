@@ -8,7 +8,7 @@
 <html lang="pl">
 
 <head>
-	<title>WMCASE - skrzynki</title>
+	<title>WMCASE - Wycena</title>
 	<meta charset="UTF-8">
 
 	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
@@ -19,25 +19,58 @@
 
 	<div id="wrapper">
 		<div id="header">
-			<h2>WMCase - Skrzynki</h2>
+			<h2>WMCase - Prośba o wycenę</h2>
 		</div>
 	</div>
+	
 	
 	<div id="container">
 	
 		<div id="content">
 
-			<form:form action="newCase" method="GET">
-				<input name="orderId" type="hidden" value="${orderId}"/>
-				<input name="clientId" type="hidden" value="${clientId}"/>
+			<form:form action="sendOrder" modelAttribute="order" method="POST">
+				<form:hidden path="id"/>
+				<input name="order" type="hidden" value="${order}"/>
+				
+				<input type="submit" value="Wyślij zapytanie" class="add-button" />
+	
+				<table>
+					<tbody>
+						<tr>
+							<th>Dane kontaktowe:</th>
+						</tr>
+						<tr>
+							<td><label>Imię:</label></td>
+							<td><input type = "text" name = "name"></td>
+						</tr>
+						<tr>
+							<td><label>Nazwisko:</label></td>
+							<td><input type = "text" name = "surname"></td>
+						</tr>
+						<tr>
+							<td><label>Email:</label></td>
+							<td><input type = "text" name = "email"></td>
+						</tr>
+						<tr>
+							<td><label>Telefon:</label></td>
+							<td><input type = "text" name = "tel"></td>
+						</tr>	
+					</tbody>
+				</table>
+			
+			</form:form>
+			
+			<form:form action="newCaseInOrder" method="GET">
+				<input name="order" type="hidden" value="${order}"/>
 				<input type="submit" value="Dodaj Skrzynkę" class="add-button" />
 			</form:form>
-
 		
 			<table>
 				<tr>
+					<th>Skrzynki</th>
+				</tr>
+				<tr>
 					<th>Wymiary</th>
-					<th>Powierzchnia</th>
 					<th>Typ</th>
 					<th>Materiał</th>
                     <th>Kolor</th>
@@ -46,7 +79,6 @@
                     <th>Koła</th>
                     <th>Zamki</th>
 					<th>Uwagi</th>
-					<th>Cena</th>
 					<th>Akcja</th>
 				</tr>
 				
@@ -67,7 +99,6 @@
 					
 					<tr>
 						<td> ${tempCase.length} x ${tempCase.width} x ${tempCase.height} mm</td>
-						<td> ${tempCase.surface} m² </td>
 						<td> ${tempCase.type.getType()}</td>
                         <td> ${tempCase.material.getMaterial()}</td>
                         <td> ${tempCase.color.getColor()}</td>
@@ -76,7 +107,6 @@
                         <td> ${tempCase.getWheels()} - ${tempCase.getWheelNum()}</td>
                         <td> ${tempCase.locks.getLocks()}
 						<td> ${tempCase.comments}</td>
-						<td> ${tempCase.price}</td>
 						<td>
 							<a href="${updateLink}">Modyfikuj</a>
 							 | 

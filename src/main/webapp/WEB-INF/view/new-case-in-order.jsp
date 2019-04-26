@@ -30,7 +30,7 @@
 	<div id="container">
 		<h3><font face="Lato">Stwórz skrzynkę</h3>
 		
-		<form:form action="saveCase" modelAttribute="case" method="POST">
+		<form:form action="addCaseToOrder" modelAttribute="case" method="POST">
 			
 			<form:hidden path="id"/>
 			<input name="orderId" type="hidden" value="${orderId}"/>
@@ -120,7 +120,7 @@
 		<div style="clear; both;"></div>
 		
 		<p>
-			<a href="${pageContext.request.contextPath}/updateOrder?clientId=${clientId}&orderId=${orderId}">Wróć do skrzynek</a>
+			<a href="${pageContext.request.contextPath}/continueOrder?cases=${cases}">Wróć do skrzynek</a>
 		</p>
 		
 		

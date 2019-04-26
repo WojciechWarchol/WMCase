@@ -7,3 +7,5 @@ Hello World! from hello file
 <a href="http://localhost:8080/wmcase/orderList">Zamówienia</a>
 <br><br>
 <a href="http://localhost:8080/wmcase/clientList">Klienci</a>
+<br><br>
+<a href="http://localhost:8080/wmcase/newClientOrder">Nowe zamówienie</a>

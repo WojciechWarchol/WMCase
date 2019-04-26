@@ -112,19 +112,19 @@ public class Order {
 		this.orderStatus = orderStatus;
 	}
 	
-	Date getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	void setDate(Date date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
-	Client getClient() {
+	public Client getClient() {
 		return client;
 	}
 
-	void setClient(Client client) {
+	public void setClient(Client client) {
 		this.client = client;
 	}
 
