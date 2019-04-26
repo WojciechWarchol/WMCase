@@ -55,7 +55,7 @@
 				</c:url>
 				
 				<c:url var="deleteLink" value="/deleteClient">
-					<c:param name="clienId" value="${tempClient.id}"/>
+					<c:param name="clientId" value="${tempClient.id}"/>
 				</c:url>
 					
 					<tr>

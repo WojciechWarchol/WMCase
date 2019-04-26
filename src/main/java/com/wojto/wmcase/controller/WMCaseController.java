@@ -87,11 +87,14 @@ public class WMCaseController {
 	}
 	
 	@GetMapping("/deleteOrder")
-	public String deleteOrder(@RequestParam("orderId") int theId) {
+	public String deleteOrder(@RequestParam("orderId") int theId,
+							  @RequestParam("clientId") int clientId,
+							  Model theModel) {
 		
 		service.deleteOrder(theId);
+		theModel.addAttribute("clientId", clientId);
 		
-		return "redirect:/orderList";
+		return "redirect:/clientOrders";
 	}
 	
 	@GetMapping("/caseList")

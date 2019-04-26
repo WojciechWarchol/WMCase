@@ -62,7 +62,7 @@ public class OrderDAOImpl implements OrderDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		
 		Query theQuery =
-				currentSession.createQuery("delete from Case where id=:orderId");
+				currentSession.createQuery("delete from Order where id=:orderId");
 		theQuery.setParameter("orderId", theId);
 		theQuery.executeUpdate();
 

@@ -50,6 +50,7 @@
 				
 				<c:url var="deleteLink" value="/deleteOrder">
 					<c:param name="orderId" value="${tempOrder.id}"/>
+					<c:param name="clientId" value="${clientId}"/>
 				</c:url>
 					
 					<tr>
