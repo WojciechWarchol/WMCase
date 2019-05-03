@@ -1,5 +1,6 @@
 package com.wojto.wmcase.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,9 +32,9 @@ public class Client {
 	@Column(name="tel")
 	private String tel;
 	
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="client_id")
-	private List<Order> orders;
+	@OneToMany(mappedBy="client", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+//	@JoinColumn(name="client_id")
+	private List<Order> orders = new ArrayList<Order>();
 	
 	
 	// konstruktory

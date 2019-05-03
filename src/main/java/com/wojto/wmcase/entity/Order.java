@@ -1,6 +1,7 @@
 package com.wojto.wmcase.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -33,7 +34,7 @@ public class Order {
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="order_id")
-	private List<Case> cases;
+	private List<Case> cases = new ArrayList<Case>();
 	
 	@Column(name="comments")
 	private String comments;

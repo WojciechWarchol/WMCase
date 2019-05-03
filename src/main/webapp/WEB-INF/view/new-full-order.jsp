@@ -30,7 +30,7 @@
 
 			<form:form action="sendOrder" modelAttribute="order" method="POST">
 				<form:hidden path="id"/>
-				<input name="order" type="hidden" value="${order}"/>
+
 				
 				<input type="submit" value="Wyślij zapytanie" class="add-button" />
 	
@@ -41,22 +41,27 @@
 						</tr>
 						<tr>
 							<td><label>Imię:</label></td>
-							<td><input type = "text" name = "name"></td>
+							<td><input type = "text" name = "client.name"></td>
 						</tr>
 						<tr>
 							<td><label>Nazwisko:</label></td>
-							<td><input type = "text" name = "surname"></td>
+							<td><input type = "text" name = "client.surname"></td>
 						</tr>
 						<tr>
 							<td><label>Email:</label></td>
-							<td><input type = "text" name = "email"></td>
+							<td><input type = "text" name = "client.email"></td>
 						</tr>
 						<tr>
 							<td><label>Telefon:</label></td>
-							<td><input type = "text" name = "tel"></td>
+							<td><input type = "text" name = "client.tel"></td>
+						</tr>
+						<tr>
+							<td><label>Komentarz do zamówienia:</label></td>
+							<td><input type = "text" name = "comments"></td>
 						</tr>	
 					</tbody>
 				</table>
+				
 			
 			</form:form>
 			
@@ -82,19 +87,17 @@
 					<th>Akcja</th>
 				</tr>
 				
+				<c:forEach var="cases" items="${order.getCases()}">
 				<c:forEach var="tempCase" items="${cases}">
-				
 				<!-- Update and delete Links -->
 				<c:url var="updateLink" value="/updateCase">
 					<c:param name="caseId" value="${tempCase.id}"/>
-					<c:param name="orderId" value="${orderId}" />
-					<c:param name="clientId" value="${clientId}"/>
+					<c:param name="orderId" value="${order}" />
 				</c:url>
 				
 				<c:url var="deleteLink" value="/deleteCase">
 					<c:param name="caseId" value="${tempCase.id}"/>
-					<c:param name="orderId" value="${orderId}" />
-					<c:param name="clientId" value="${clientId}"/>
+					<c:param name="orderId" value="${order}" />
 				</c:url>
 					
 					<tr>
@@ -116,7 +119,7 @@
 						<td>
 						
 					</tr>
-						
+				</c:forEach>		
 				</c:forEach>
 				
 			</table>

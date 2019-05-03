@@ -16,6 +16,7 @@ import com.mysql.cj.xdevapi.CreateIndexParams;
 import com.wojto.wmcase.entity.Case;
 import com.wojto.wmcase.entity.Client;
 import com.wojto.wmcase.entity.Order;
+import com.wojto.wmcase.enums.OrderStatus;
 import com.wojto.wmcase.service.Service;
 
 @Controller
@@ -172,32 +173,39 @@ public class WMCaseController {
 	public String createNewOrder(Model theModel) {
 		
 		Order theOrder = new Order();
-		System.out.println(theOrder.getId());
+		Client theClient = new Client();
+		theOrder.setClient(theClient);
+		theClient.getOrders().add(theOrder);
+		System.out.println(Order.class);
 		theModel.addAttribute("order", theOrder);
+		theModel.addAttribute("client", theClient);
 		
 		return "new-full-order";
 	}
 	
 	@GetMapping("/continueOrder")
-	public String continueOrder(@RequestParam("order") Order theOrder,
+	public String continueOrder(@ModelAttribute("order") Order theOrder,
 								Model theModel) {
 		
 		return "new-full-order";
 	}
 	
 	@PostMapping("/sendOrder")
-	public String sendOrder(@RequestParam("client") Client theClient,
-							@RequestParam("order") Order theOrder,
+	public String sendOrder(@ModelAttribute("order") Order theOrder,
 							Model theModel) {
 		
-		theOrder.setClient(theClient);
+		System.out.println("The client id is: " + theOrder.getClient().getName());
+		theOrder.setOrderStatus(OrderStatus.ZAPYTANIE);
+		theOrder.setCharge(100);
+		Client theClient = theOrder.getClient();
+		service.saveClient(theClient);
 		service.saveOrder(theOrder);
 		
 		return "list-clients";
 	}
 	
 	@GetMapping("/newCaseInOrder")
-	public String createNewCaseInOrder(@RequestParam("order") Order theOrder,
+	public String createNewCaseInOrder(@ModelAttribute("order") Order theOrder,
 										Model theModel) {
 		
 		Case theCase = new Case();
@@ -210,7 +218,7 @@ public class WMCaseController {
 	
 	@PostMapping("/addCaseToOrder")
 	public String addCaseToOrder(@ModelAttribute("case") Case theCase,
-								 @RequestParam("order") Order theOrder,
+								 @ModelAttribute("order") Order theOrder,
 								 Model theModel) {
 		
 		theOrder.addCase(theCase);
@@ -219,5 +227,7 @@ public class WMCaseController {
 		
 		return "redirect:/continueOrder";
 	}
+	
+	// Add Update, and Delete for client side
 	
 }
