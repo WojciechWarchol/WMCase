@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mysql.cj.xdevapi.CreateIndexParams;
 import com.wojto.wmcase.entity.Case;
@@ -21,6 +22,7 @@ import com.wojto.wmcase.service.Service;
 
 @Controller
 @RequestMapping("/")
+@SessionAttributes("order")
 public class WMCaseController {
 
 	@Autowired
@@ -172,11 +174,13 @@ public class WMCaseController {
 	@GetMapping("/newClientOrder")
 	public String createNewOrder(Model theModel) {
 		
+		System.out.println("Initializing new order");
+		
 		Order theOrder = new Order();
 		Client theClient = new Client();
 		theOrder.setClient(theClient);
-		theClient.getOrders().add(theOrder);
-		System.out.println(Order.class);
+//		theClient.getOrders().add(theOrder);
+		
 		theModel.addAttribute("order", theOrder);
 		theModel.addAttribute("client", theClient);
 		
@@ -186,6 +190,11 @@ public class WMCaseController {
 	@GetMapping("/continueOrder")
 	public String continueOrder(@ModelAttribute("order") Order theOrder,
 								Model theModel) {
+		
+		theModel.addAttribute("order", theOrder);
+		
+		System.out.println("Executing the continueOrder method");
+		System.out.println(theOrder.getCases().size());
 		
 		return "new-full-order";
 	}
@@ -221,9 +230,11 @@ public class WMCaseController {
 								 @ModelAttribute("order") Order theOrder,
 								 Model theModel) {
 		
+		System.out.println("Executing the addCaseToOrderMethod");
 		theOrder.addCase(theCase);
-		
+		System.out.println(theCase.toString());
 		theModel.addAttribute("order", theOrder);
+		System.out.println(theOrder.getCases().size());
 		
 		return "redirect:/continueOrder";
 	}

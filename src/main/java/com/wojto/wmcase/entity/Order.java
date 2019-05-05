@@ -34,7 +34,7 @@ public class Order {
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="order_id")
-	private List<Case> cases = new ArrayList<Case>();
+	private List<Case> cases;
 	
 	@Column(name="comments")
 	private String comments;
@@ -76,6 +76,9 @@ public class Order {
 	}
 
 	public List<Case> getCases() {
+		if(cases == null) {
+			this.cases = new ArrayList<Case>();
+		}
 		return cases;
 	}
 
@@ -127,14 +130,24 @@ public class Order {
 
 	public void setClient(Client client) {
 		this.client = client;
+		// Not sure if this is goood practice
+		client.addOrder(this);
 	}
 
 	// Inne metody
 	public boolean addCase(Case skrzynka) {
+		if(cases == null) {
+			this.cases = new ArrayList<Case>();
+		}
+		
 		if(skrzynka != null) {
 			cases.add(skrzynka);
 			return true;
 		}
+		
+		// Not sure if this is good practice
+		skrzynka.setOrder(this);
+		
 		return false;
 	}
 	

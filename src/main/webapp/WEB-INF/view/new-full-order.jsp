@@ -30,7 +30,7 @@
 
 			<form:form action="sendOrder" modelAttribute="order" method="POST">
 				<form:hidden path="id"/>
-
+				<form:hidden path="date"/>
 				
 				<input type="submit" value="Wyślij zapytanie" class="add-button" />
 	
@@ -87,8 +87,8 @@
 					<th>Akcja</th>
 				</tr>
 				
-				<c:forEach var="cases" items="${order.getCases()}">
-				<c:forEach var="tempCase" items="${cases}">
+				<c:forEach var="tempCase" items="${order.getCases()}">
+				<%-- <c:forEach var="tempCase" items="${cases}"> --%>
 				<!-- Update and delete Links -->
 				<c:url var="updateLink" value="/updateCase">
 					<c:param name="caseId" value="${tempCase.id}"/>
@@ -119,7 +119,7 @@
 						<td>
 						
 					</tr>
-				</c:forEach>		
+				<%-- </c:forEach> --%>		
 				</c:forEach>
 				
 			</table>
