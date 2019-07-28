@@ -40,83 +40,80 @@
 			
 			<!-- Needs a Controller method -->
 			
-			<table>
-				<tbody>
-					<tr>
-						<td><label class="col-form-label col-sm-3">Długość:</label></td>
-						<td><form:input class="form-control col-sm-3" path="length" /></td>
-					</tr>
-					<tr>
-						<td><label class="col-form-label col-sm-3">Szerokość:</label></td>
-						<td><form:input class="form-control col-sm-3" path="width" /></td>
-					</tr>
-					<tr>
-						<td><label class="col-form-label col-sm-3">Wysokość:</label></td>
-						<td><form:input class="form-control col-sm-3" path="height" /></td>
-					</tr>
-					
-					<tr>
-						<td><label>Typ:</label></td>
-						<td><form:select path="type" >
+
+					<div>
+						<label class="col-form-label col-sm-3">Długość:</label>
+						<form:input class="form-control col-sm-3" path="length" />
+					</div>
+					<div>
+						<label class="col-form-label col-sm-3">Szerokość:</label>
+						<form:input class="form-control col-sm-3" path="width" />
+					</div>
+					<div>
+						<label class="col-form-label col-sm-3">Wysokość:</label>
+						<form:input class="form-control col-sm-3" path="height" />
+					</div>
+					<hr>
+					<div>
+						<label class="col-form-label col-sm-3">Typ:</label>
+						<form:select class="form-control col-sm-3" path="type" >
 							<form:options itemLabel="type"/>
-							</form:select></td>
-					</tr>
-					<tr>
-						<td><label>Materiał:</label></td>
-						<td><form:select path="material" >
+							</form:select>
+					</div>
+					<div>
+						<label class="col-form-label col-sm-3">Materiał:</label>
+						<form:select class="form-control col-sm-3" path="material" >
 						<form:options itemLabel="material"/>
-						</form:select></td>
-					</tr>
-					<tr>
-						<td><label>Kolor:</label></td>
-						<td><form:select path="color" >
+						</form:select>
+					</div>
+					<div>
+						<label class="col-form-label col-sm-3">Kolor:</label>
+						<form:select class="form-control col-sm-3" path="color" >
 						<form:options itemLabel="color"/>
-						</form:select></td>
-					</tr>
-					<tr>
-						<td><label>Wypełnienie:</label></td>
-						<td><form:select path="filling" >
+						</form:select>
+					</div>
+					<div>
+						<label class="col-form-label col-sm-3">Wypełnienie:</label>
+						<form:select class="form-control col-sm-3" path="filling" >
 						<form:options itemLabel="filling"/>
-						</form:select></td>
-					</tr>
-					<tr>
-						<td><label>Rączki:</label></td>
-						<td><form:select path="handle" >
+						</form:select>
+					</div>
+					<div>
+						<label class="col-form-label col-sm-3">Rączki:</label>
+						<form:select class="form-control col-sm-3" path="handle" >
 						<form:options itemLabel="handle"/>
-						</form:select></td>
-					</tr>
-                    <tr>
-                        <td><label>Ilość rączek:</label></td>
-                        <td><form:input path="handleNum" /></td>
-                    </tr>
-                    <tr>
-                        <td><label>Koła:</label></td>
-                        <td><form:select path="wheels" >
+						</form:select>
+					</div>
+                    <div>
+                        <label class="col-form-label col-sm-3">Ilość rączek:</label>
+                        <form:input class="form-control col-sm-3" path="handleNum" />
+                    </div>
+                    <div>
+                        <label class="col-form-label col-sm-3">Koła:</label>
+                        <form:select class="form-control col-sm-3" path="wheels" >
                         <form:option value="true" label="Tak"/>
                         <form:option value="false" label="Nie"/>
-                        </form:select></td>
-                    </tr>
-                    <tr>
-                        <td><label>Ilość kół:</label></td>
-                        <td><form:input path="wheelNum" /></td>
-                    </tr>
-                    <tr>
-                        <td><label>Zamki:</label></td>
-                        <td><form:select path="locks" >
+                        </form:select>
+                    </div>
+                    <div>
+                        <label class="col-form-label col-sm-3">Ilość kół:</label>
+                        <form:input class="form-control col-sm-3" path="wheelNum" />
+                    </div>
+                    <div>
+                        <label class="col-form-label col-sm-3">Zamki:</label>
+                        <form:select class="form-control col-sm-3" path="locks" >
                         <form:options itemLabel="locks"/>
-                        </form:select></td>
-                    </tr>
-					<tr>
-						<td><label>Uwagi:</label></td>
-						<td><form:input path="comments" /></td>
-					</tr>
-					<tr>
-						<td><label></label></td>
-						<td><input type="submit" value="Zapisz" class="save" /></td>
-					</tr>
-				</tbody>
-			
-			</table>
+                        </form:select>
+                    </div>
+					<div>
+						<label class="col-form-label col-sm-3">Uwagi:</label>
+						<form:input class="form-control col-sm-3" path="comments" />
+					</div>
+					<div>
+						<label></label>
+						<button type="submit" class="btn btn-default">Zapisz</button>
+					</div>
+
 			
 		</form:form>
 
