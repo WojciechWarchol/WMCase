@@ -42,16 +42,16 @@
 			<table>
 				<tbody>
 					<tr>
-						<td><label>Długość:</label></td>
-						<td><form:input path="length" /></td>
+						<td><label class="col-form-label col-sm-3">Długość:</label></td>
+						<td><form:input type="integer" class="form-control col-sm-3" path="length" /></td>
 					</tr>
 					<tr>
-						<td><label>Szerokość:</label></td>
-						<td><form:input path="width" /></td>
+						<td><label class="col-form-label col-sm-3">Szerokość:</label></td>
+						<td><form:input type="integer" class="form-control col-sm-3" path="width" /></td>
 					</tr>
 					<tr>
-						<td><label>Wysokość:</label></td>
-						<td><form:input path="height" /></td>
+						<td><label class="col-form-label col-sm-3">Wysokość:</label></td>
+						<td><form:input type="integer" class="form-control col-sm-3" path="height" /></td>
 					</tr>
 					<tr>
 						<td><label>Typ:</label></td>
