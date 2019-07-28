@@ -11,10 +11,11 @@
 	<title>WMCASE - skrzynki</title>
 	
 	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-	
+	<!-- 
 	<link type="text/css"
 		rel= "stylesheet"
 		href="${pageContext.request.contextPath}/resources/css/style.css" />
+	 -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
@@ -22,13 +23,13 @@
 
 <body>
 	
-	<div id="container">
+	<div class="container allign-center" id="wrapper">
 		<div id="header">
 			<h2>WMCase - Tworzenie skrzynki</h2>
 		</div>
 	</div>
 
-	<div id="container">
+	<div class="container" id="form">
 		<h3><font face="Lato">Stwórz skrzynkę</h3>
 		
 		<form:form action="addCaseToOrder" modelAttribute="case" method="POST">
@@ -53,6 +54,7 @@
 						<td><label class="col-form-label col-sm-3">Wysokość:</label></td>
 						<td><form:input class="form-control col-sm-3" path="height" /></td>
 					</tr>
+					
 					<tr>
 						<td><label>Typ:</label></td>
 						<td><form:select path="type" >
