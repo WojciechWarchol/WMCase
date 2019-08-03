@@ -110,7 +110,7 @@
 					</tr>
 					<tr>
 						<td><label></label></td>
-						<td><input type="submit" value="Zapisz" class="save" /></td>
+						<td><input type="submit" value="Zapisz" class="btn btn-dark" /></td>
 					</tr>
 				</tbody>
 			

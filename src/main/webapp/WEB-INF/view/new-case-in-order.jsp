@@ -41,77 +41,81 @@
 			<!-- Needs a Controller method -->
 			
 
-					<div>
-						<label class="col-form-label col-sm-3">Długość:</label>
-						<form:input class="form-control col-sm-3" path="length" />
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2">Długość:</label>
+						<form:input class="form-control col-sm-3 text-right" path="length" />
 					</div>
-					<div>
-						<label class="col-form-label col-sm-3">Szerokość:</label>
-						<form:input class="form-control col-sm-3" path="width" />
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2">Szerokość:</label>
+						<form:input class="form-control col-sm-3 text-right" path="width" />
 					</div>
-					<div>
-						<label class="col-form-label col-sm-3">Wysokość:</label>
-						<form:input class="form-control col-sm-3" path="height" />
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2">Wysokość:</label>
+						<form:input class="form-control col-sm-3 text-right" path="height" />
 					</div>
 					<hr>
-					<div>
-						<label class="col-form-label col-sm-3">Typ:</label>
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2">Typ:</label>
 						<form:select class="form-control col-sm-3" path="type" >
 							<form:options itemLabel="type"/>
 							</form:select>
 					</div>
-					<div>
-						<label class="col-form-label col-sm-3">Materiał:</label>
-						<form:select class="form-control col-sm-3" path="material" >
-						<form:options itemLabel="material"/>
-						</form:select>
-					</div>
-					<div>
-						<label class="col-form-label col-sm-3">Kolor:</label>
-						<form:select class="form-control col-sm-3" path="color" >
-						<form:options itemLabel="color"/>
-						</form:select>
-					</div>
-					<div>
-						<label class="col-form-label col-sm-3">Wypełnienie:</label>
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2">Wypełnienie:</label>
 						<form:select class="form-control col-sm-3" path="filling" >
 						<form:options itemLabel="filling"/>
 						</form:select>
 					</div>
-					<div>
-						<label class="col-form-label col-sm-3">Rączki:</label>
+					<hr>
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2">Materiał:</label>
+						<form:select class="form-control col-sm-3" path="material" >
+						<form:options itemLabel="material"/>
+						</form:select>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2">Kolor:</label>
+						<form:select class="form-control col-sm-3" path="color" >
+						<form:options itemLabel="color"/>
+						</form:select>
+					</div>
+					<hr>
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2">Rączki:</label>
 						<form:select class="form-control col-sm-3" path="handle" >
 						<form:options itemLabel="handle"/>
 						</form:select>
 					</div>
-                    <div>
-                        <label class="col-form-label col-sm-3">Ilość rączek:</label>
-                        <form:input class="form-control col-sm-3" path="handleNum" />
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-2">Ilość rączek:</label>
+                        <form:input class="form-control col-sm-3 text-right" path="handleNum" />
                     </div>
-                    <div>
-                        <label class="col-form-label col-sm-3">Koła:</label>
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-2">Koła:</label>
                         <form:select class="form-control col-sm-3" path="wheels" >
                         <form:option value="true" label="Tak"/>
                         <form:option value="false" label="Nie"/>
                         </form:select>
                     </div>
-                    <div>
-                        <label class="col-form-label col-sm-3">Ilość kół:</label>
-                        <form:input class="form-control col-sm-3" path="wheelNum" />
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-2">Ilość kół:</label>
+                        <form:input class="form-control col-sm-3 text-right" path="wheelNum" />
                     </div>
-                    <div>
-                        <label class="col-form-label col-sm-3">Zamki:</label>
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-2">Zamki:</label>
                         <form:select class="form-control col-sm-3" path="locks" >
                         <form:options itemLabel="locks"/>
                         </form:select>
                     </div>
-					<div>
-						<label class="col-form-label col-sm-3">Uwagi:</label>
-						<form:input class="form-control col-sm-3" path="comments" />
+                    <hr>
+					<div class="form-group row">
+						<label class="col-form-label col-sm-2">Uwagi:</label>
+						<form:textarea rows="8" cols="30" class="form-control col-sm-3" path="comments" />
 					</div>
-					<div>
+					<div class="col-sm-5">
 						<label></label>
-						<button type="submit" class="btn btn-default">Zapisz</button>
+						<button type="submit" class="btn btn-dark float-right ml-0">Dodaj skrzynkę</button>
+						<a class="btn btn-light float-right" href="${pageContext.request.contextPath}/continueOrder?cases=${cases}">Wróć do skrzynek</a>
 					</div>
 
 			
@@ -120,7 +124,7 @@
 		<div style="clear; both;"></div>
 		
 		<p>
-			<a href="${pageContext.request.contextPath}/continueOrder?cases=${cases}">Wróć do skrzynek</a>
+
 		</p>
 		
 		
