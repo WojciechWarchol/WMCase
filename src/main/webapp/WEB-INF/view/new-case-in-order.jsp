@@ -112,10 +112,13 @@
 						<label class="col-form-label col-sm-2">Uwagi:</label>
 						<form:textarea rows="8" cols="30" class="form-control col-sm-3" path="comments" />
 					</div>
-					<div class="col-sm-5">
+					<div class="form-group row">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-3 px-0 d-flex flex-row">
+						<a class="btn btn-light flex-fill mr-1" href="${pageContext.request.contextPath}/continueOrder?cases=${cases}">Wróć</a>
 						<label></label>
-						<button type="submit" class="btn btn-dark float-right ml-0">Dodaj skrzynkę</button>
-						<a class="btn btn-light float-right" href="${pageContext.request.contextPath}/continueOrder?cases=${cases}">Wróć do skrzynek</a>
+						<button type="submit" class="btn btn-dark flex-fill ml-1">Dodaj</button>
+						</div>
 					</div>
 
 			
