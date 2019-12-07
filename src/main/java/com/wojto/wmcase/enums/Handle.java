@@ -2,7 +2,7 @@ package com.wojto.wmcase.enums;
 
 public enum Handle {
 	KASETOWY ("Kasetowy w miseczce"), 
-	SPREZYNOWY ("Spr�ynowy nawierzchniowy"), 
+	SPREZYNOWY ("Sprężynowy nawierzchniowy"),
 	WALIZKOWY ("Walizkowy");
 	
 	public final String handle;

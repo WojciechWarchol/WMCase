@@ -1,15 +1,14 @@
 package com.wojto.wmcase.dao;
 
-import java.util.List;
-
+import com.wojto.wmcase.entity.Case;
+import com.wojto.wmcase.entity.Order;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.wojto.wmcase.entity.Case;
-import com.wojto.wmcase.entity.Order;
+import java.util.List;
 
 @Repository
 public class OrderDAOImpl implements OrderDAO {
@@ -65,7 +64,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 	}
 	
-	// Do celów testowych
+	// Do celÃ³w testowych
 	public List<Order> getOrders() {
 		
 		Session currentSession = sessionFactory.getCurrentSession();

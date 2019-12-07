@@ -5,9 +5,9 @@ public enum Color {
 	RED ("Czerwony"),
 	BLUE ("Niebieski"),
 	GREY ("Szary"), 
-	YELLOW ("¯ó³ty"),
-	ORANGE ("Pomarañczowy"),
-	WHITE ("Bia³y"),
+	YELLOW ("Å»Ã³Å‚ty"),
+	ORANGE ("PomaraÅ„czowy"),
+	WHITE ("BiaÅ‚y"),
 	TURQUISE ("Turkusowy"),
 	OTHER ("Inny");
 	
