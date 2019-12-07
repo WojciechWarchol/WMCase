@@ -7,14 +7,14 @@ package com.wojto.wmcase.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-//import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+//import org.springframework.core.env.Environment;
 
 
 @Configuration
@@ -30,7 +30,7 @@ public class SpringConfig implements WebMvcConfigurer {
 //	@Autowired
 //	public static SessionFactory sessionFactory;
 	
-//	// To chyba bêdzie mo¿na skasowaæ
+//	// To chyba bÄ™dzie moÅ¼na skasowaÄ‡
 //	private Logger logger = Logger.getLogger(getClass().getName());
 	
 	@Bean

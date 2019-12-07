@@ -2,7 +2,7 @@ package com.wojto.wmcase.enums;
 
 public enum Type {
 	KUFER ("Kufer"), 
-	NAKLADKA ("Nak≥adka"), 
+	NAKLADKA ("Nak≈Çadka"), 
 	WALIZKA ("Walizka"), 
 	KABLARKA ("Kablarka");
 	
