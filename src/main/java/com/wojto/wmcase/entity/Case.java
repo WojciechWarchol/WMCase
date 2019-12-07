@@ -1,25 +1,9 @@
 package com.wojto.wmcase.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
+import com.wojto.wmcase.enums.*;
 import org.hibernate.annotations.Proxy;
 
-import com.wojto.wmcase.enums.Color;
-import com.wojto.wmcase.enums.Material;
-import com.wojto.wmcase.enums.Type;
-import com.wojto.wmcase.enums.Handle;
-import com.wojto.wmcase.enums.Filling;
-import com.wojto.wmcase.enums.Locks;
+import javax.persistence.*;
 
 
 @Entity
@@ -287,7 +271,7 @@ public class Case {
 				+ surface + "m2, typ=" + type
 				+ ", material=" + material + ", kolor=" + color + ", wypelnienie=" + filling + ", uchwyty="
 				+ handle + ", iloscUchwytow=" + handleNum + ", kola=" + wheels + ", iloscKol=" + wheelNum
-				+ ", zamki=" + locks + ", uwagi=" + comments + ", cena=" + price + "z≥]";
+				+ ", zamki=" + locks + ", uwagi=" + comments + ", cena=" + price + "z≈Ç]";
 	}
 	
 
