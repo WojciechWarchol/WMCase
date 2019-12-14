@@ -10,9 +10,10 @@
 <head>
 	<title>WMCASE - skrzynki</title>
 	<meta charset="UTF-8">
-
+    <!--
 	<link href="<c:url value="/resources/css/style.css" />"
 	      rel="stylesheet">
+	      -->
 	<link rel="stylesheet"
 	      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -22,29 +23,34 @@
 
 <body>
 
-	<div class="container allign-center" id="wrapper">
-		<div id="header">
-			<h2>WMCase - Skrzynki</h2>
-		</div>
+	<div class="container-fluid bg-dark m-0">
+        <h2 class="text-light text-center p-3">WMCase - Skrzynki</h2>
 	</div>
 	
-	<div id="container">
+	<div class="cantainer allign-center m-3">
 
 	    <h3>
 	        <font face="Lato">Skrzynki zamówienia ${orderId}
 	    </h3>
 
-		<div id="content">
+		<div>
 
-			<form:form action="newCase" method="GET">
-				<input name="orderId" type="hidden" value="${orderId}"/>
-				<input name="clientId" type="hidden" value="${clientId}"/>
-				<input type="submit" value="Dodaj Skrzynkę" class="add-button" />
-			</form:form>
+            <div class="form-group row">
+                <form:form action="newCase" method="GET">
+                    <input name="orderId" type="hidden" value="${orderId}"/>
+                    <input name="clientId" type="hidden" value="${clientId}"/>
+                    <!--
+                    <input type="submit" value="Dodaj Skrzynkę" class="add-button" />
+                    -->
+                    <button type="submit" class="btn btn-dark mx-3">Dodaj Skrzynkę</button>
+    			</form:form>
+					<a class="btn btn-light" href="${pageContext.request.contextPath}/clientOrders?clientId=${clientId}">Wróć do zamówień</a>
+			</div>
+
 
 		
 			<table class="table">
-                <thread class="thead-dark">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col">Wymiary</th>
                         <th scope="col">Powierzchnia</th>
@@ -59,7 +65,7 @@
                         <th scope="col">Cena</th>
                         <th scope="col">Akcja</th>
                     </tr>
-                </thread>
+                </thead>
 
 				<c:forEach var="tempCase" items="${cases}">
 				<!-- Update and delete Links -->
@@ -100,8 +106,7 @@
 				</c:forEach>
 				
 			</table>
-		
-			<a href="${pageContext.request.contextPath}/clientOrders?clientId=${clientId}">Wróć do zamówień</a>
+
 		
 		</div>
 	
