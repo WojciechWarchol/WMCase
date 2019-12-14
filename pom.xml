@@ -142,8 +142,6 @@
 	
 	<build>
 		<finalName>wmcase</finalName>
-		
-	
 	
 		<pluginManagement>
 			<plugins>
