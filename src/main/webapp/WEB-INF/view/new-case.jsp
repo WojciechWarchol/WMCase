@@ -13,16 +13,19 @@
 	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 	
 	<link type="text/css"
-		rel= "stylesheet"
-		href="${pageContext.request.contextPath}/resources/css/style.css" />
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		  rel= "stylesheet"
+		  href="${pageContext.request.contextPath}/resources/css/style.css" />
+	<link rel="stylesheet"
+	      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	      crossorigin="anonymous">
 
 </head>
 
 
 <body>
 	
-	<div id="wrapper">
+	<div class="container allign-center" id="wrapper">
 		<div id="header">
 			<h2>WMCase - Tworzenie skrzynki</h2>
 		</div>
@@ -39,20 +42,31 @@
 			
 			<!-- Needs a Controller method -->
 			
-			<table>
-				<tbody>
-					<tr>
-						<td><label class="col-form-label col-sm-3">Długość:</label></td>
-						<td><form:input type="integer" class="form-control col-sm-3" path="length" /></td>
-					</tr>
-					<tr>
-						<td><label class="col-form-label col-sm-3">Szerokość:</label></td>
-						<td><form:input type="integer" class="form-control col-sm-3" path="width" /></td>
-					</tr>
-					<tr>
-						<td><label class="col-form-label col-sm-3">Wysokość:</label></td>
-						<td><form:input type="integer" class="form-control col-sm-3" path="height" /></td>
-					</tr>
+
+					<div class="form-group row">
+						<label class="col-form-label col-sm-3">Długość:</label>
+				        <div class="input-group col-sm-3 px-0">
+						    <form:input type="integer" class="form-control col-sm-3" path="length" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">mm</span>
+                            </div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-sm-3">Szerokość:</label>
+						<div class="input-group col-sm-3 px-0">
+						    <form:input type="integer" class="form-control col-sm-3" path="width" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">mm</span>
+                            </div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-sm-3">Wysokość:</label>
+						<div class="input-group col-sm-3 px-0">
+						    <form:input type="integer" class="form-control col-sm-3" path="height" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">mm</span>
+                            </div>
+					</div>
 					<tr>
 						<td><label>Typ:</label></td>
 						<td><form:select path="type" >
@@ -112,9 +126,7 @@
 						<td><label></label></td>
 						<td><input type="submit" value="Zapisz" class="btn btn-dark" /></td>
 					</tr>
-				</tbody>
-			
-			</table>
+
 			
 		</form:form>
 
