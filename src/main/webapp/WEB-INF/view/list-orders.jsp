@@ -10,35 +10,34 @@
 <head>
 	<title>WMCASE - Zamówienia</title>
 	<meta charset="UTF-8">
-	
+	<!--
 	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+	-->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
 
-	<div id="wrapper">
-		<div id="header">
-			<h2>WMCase - Zamówienia</h2>
-		</div>
+	<div class="container-fluid bg-dark m-0">
+        <h2 class="text-light text-center p-3">WMCase - Zamówienia</h2>
 	</div>
 	
-	<div id="container">
+	<div class="container-fluid alling-center m-3">
 	
-		<div id="content">
-		
-		
-		
-			<table>
-				<tr>
-					<th>Data zamówienia</th>
-					<th>Numer zamówienia</th>
-					<th>Liczba skrzynek</th>
-					<th>Komentarz</th>
-					<th>Wartość</th>
-                    <th>Status</th>
-                    <th>Akcja</th>
-				</tr>
+		<div>
+
+			<table class="table">
+			    <thead class="thead-dark"
+                    <tr>
+                        <th scope="col">Data zamówienia</th>
+                        <th scope="col">Numer zamówienia</th>
+                        <th scope="col">Liczba skrzynek</th>
+                        <th scope="col">Komentarz</th>
+                        <th scope="col">Wartość</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Akcja</th>
+                    </tr>
+				</thead>
 				
 				<c:forEach var="tempOrder" items="${orders}">
 				
@@ -52,7 +51,8 @@
 					<c:param name="orderId" value="${tempOrder.id}"/>
 					<c:param name="clientId" value="${clientId}"/>
 				</c:url>
-					
+
+				<tbody>
 					<tr>
 						<td> ${tempOrder.date}</td>
 						<td> ${tempOrder.id}</td>
@@ -61,15 +61,14 @@
 						<td> ${tempOrder.charge}</td>
 						<td> ${tempOrder.getOrderStatus()}</td>
 						<td> 
-							<a href="${updateLink}">Modyfikuj</a>
-							 | 
-							<a href="${deleteLink}" 
+							<a class="btn btn-dark btn-sm" href="${updateLink}">Modyfikuj</a>
+							<a class="btn btn-danger btn-sm" href="${deleteLink}"
 							onclick="if (!(confirm('Czy na pewno chcesz usunąć skrzynkę?'))) return false">
 							Usuń</a>
 						<td>
 
 					</tr>
-						
+                </tbody>
 				</c:forEach>
 				
 			</table>

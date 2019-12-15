@@ -27,7 +27,7 @@
         <h2 class="text-light text-center p-3">WMCase - Skrzynki</h2>
 	</div>
 	
-	<div class="cantainer allign-center m-3">
+	<div class="container-fluid allign-center m-3">
 
 	    <h3>
 	        <font face="Lato">Skrzynki zamówienia ${orderId}
@@ -94,9 +94,8 @@
 						<td> ${tempCase.comments}</td>
 						<td> ${tempCase.price}</td>
 						<td>
-							<a href="${updateLink}">Modyfikuj</a>
-							 | 
-							<a href="${deleteLink}" 
+							<a class="btn btn-dark btn-sm" href="${updateLink}">Modyfikuj</a>
+							<a class="btn btn-danger btn-sm" href="${deleteLink}"
 							onclick="if (!(confirm('Czy na pewno chcesz usunąć skrzynkę?'))) return false">
 							Usuń</a>
 						<td>
