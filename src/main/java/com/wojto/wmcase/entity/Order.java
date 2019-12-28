@@ -4,7 +4,7 @@ import com.wojto.wmcase.enums.OrderStatus;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +49,7 @@ public class Order {
 			this.charge += skrzynka.getPrice();
 		}
 		this.orderStatus = OrderStatus.ZAPYTANIE;
+		this.date = new Date();
 	}
 
 

@@ -22,6 +22,7 @@
 </head>
 
 <body>
+<c:set var="now" value="<%=new java.util.Date()%>" />
 
 	<div class="container-fluid bg-dark m-0">
         <h2 class="text-light text-center p-3">WMCase - Prośba o wycenę</h2>
@@ -32,7 +33,6 @@
 
         <form:form action="sendOrder" modelAttribute="order" method="POST">
             <form:hidden path="id"/>
-            <form:hidden path="date"/>
 
             <button type="submit" class="btn btn-dark my-3" >Wyślij zapytanie</button>
 

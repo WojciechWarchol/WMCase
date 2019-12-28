@@ -145,7 +145,7 @@
                         <div class="form-group row">
                             <div class="px-0 d-flex flex-row">
                                 <a class="btn btn-light flex-fill mr-2"
-                                    href="${pageContext.request.contextPath}/continueOrder?cases=${cases}">Wróć</a>
+                                    href="javascript:history.back()">Wróć</a>
                                 <label></label>
                                 <button type="submit" class="btn btn-dark flex-fill ml-2">Dodaj</button>
                             </div>
