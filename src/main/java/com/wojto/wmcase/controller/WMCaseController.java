@@ -1,24 +1,18 @@
 package com.wojto.wmcase.controller;
 
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
-import com.mysql.cj.xdevapi.CreateIndexParams;
 import com.wojto.wmcase.entity.Case;
 import com.wojto.wmcase.entity.Client;
 import com.wojto.wmcase.entity.Order;
 import com.wojto.wmcase.enums.OrderStatus;
 import com.wojto.wmcase.service.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -179,6 +173,7 @@ public class WMCaseController {
 		Order theOrder = new Order();
 		Client theClient = new Client();
 		theOrder.setClient(theClient);
+		theOrder.setDate(new Date());
 //		theClient.getOrders().add(theOrder);
 		
 		theModel.addAttribute("order", theOrder);
@@ -231,7 +226,9 @@ public class WMCaseController {
 								 Model theModel) {
 		
 		System.out.println("Executing the addCaseToOrderMethod");
+		theCase.evaluation();
 		theOrder.addCase(theCase);
+		theOrder.getCharge();
 		System.out.println(theCase.toString());
 		theModel.addAttribute("order", theOrder);
 		System.out.println(theOrder.getCases().size());

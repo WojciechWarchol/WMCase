@@ -10,34 +10,33 @@
 <head>
 	<title>WMCASE - Klienci</title>
 	<meta charset="UTF-8">
-	
+	<!--
 	<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+	-->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
 
-	<div id="wrapper">
-		<div id="header">
-			<h2>WMCase - Klienci</h2>
-		</div>
+	<div class="container-fluid bg-dark m-0">
+        <h2 class="text-light text-center p-3">WMCase - Klienci</h2>
 	</div>
 	
-	<div id="container">
+	<div class="container-fluid allign-center m-3">
 	
-		<div id="content">
+		<div>
 		
-		
-		
-			<table>
-				<tr>
-					<th>Id Klienta</th>
-					<th>Imię</th>
-					<th>Nazwisko</th>
-					<th>Email</th>
-                    <th>Telefon</th>
-                    <th>Akcja</th>
-				</tr>
+			<table class="table">
+				<thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id Klienta</th>
+                        <th scope="col">Imię</th>
+                        <th scope="col">Nazwisko</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Telefon</th>
+                        <th scope="col">Akcja</th>
+                    </tr>
+				</thead>
 				
 				<c:forEach var="tempClient" items="${clients}">
 				
@@ -49,7 +48,8 @@
 				<c:url var="deleteLink" value="/deleteClient">
 					<c:param name="clientId" value="${tempClient.id}"/>
 				</c:url>
-					
+
+				<tbody>
 					<tr>
 						<td> ${tempClient.id}</td>
 						<td> ${tempClient.name}</td>
@@ -57,14 +57,14 @@
 						<td> ${tempClient.email}</td>
 						<td> ${tempClient.tel}</td>
 						<td>
-							<a href="${updateLink}">Zamówienia</a>
-							 | 
-							<a href="${deleteLink}" 
+							<a class="btn btn-dark btn-sm" href="${updateLink}">Zamówienia</a>
+							<a class="btn btn-danger btn-sm" href="${deleteLink}"
 							onclick="if (!(confirm('Czy na pewno chcesz usunąć skrzynkę?'))) return false">
 							Usuń</a>
 						<td>
 							
 					</tr>
+				<tbody>
 						
 				</c:forEach>
 				
