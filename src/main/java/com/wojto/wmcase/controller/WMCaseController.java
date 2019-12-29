@@ -226,7 +226,9 @@ public class WMCaseController {
 								 Model theModel) {
 		
 		System.out.println("Executing the addCaseToOrderMethod");
+		theCase.evaluation();
 		theOrder.addCase(theCase);
+		theOrder.getCharge();
 		System.out.println(theCase.toString());
 		theModel.addAttribute("order", theOrder);
 		System.out.println(theOrder.getCases().size());

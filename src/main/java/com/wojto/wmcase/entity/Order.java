@@ -86,6 +86,7 @@ public class Order {
 		for(Case tempCase : cases) {
 			charge += tempCase.getPrice();
 		}
+		this.charge = charge;
 		return charge;
 	}
 

@@ -31,36 +31,6 @@
 	
 	<div class="container-fluid allign-center">
 
-        <form:form action="sendOrder" modelAttribute="order" method="POST">
-            <form:hidden path="id"/>
-
-            <button type="submit" class="btn btn-dark my-3" >Wyślij zapytanie</button>
-
-            <div class="form-inline">
-                <div class="col-auto form-group row">
-                    <label class="col-form-label">Imię:</label>
-                    <form:input class="form-control mx-3 text-right" type="text" path="client.name" />
-                </div>
-                <div class="col-auto form-group row">
-                    <label class="col-form-label">Nazwisko:</label>
-                    <form:input class="form-control mx-3 text-right" type="text" path="client.surname" />
-                </div>
-                <div class="col-auto form-group row">
-                    <label class="col-form-label">Email:</label>
-                    <form:input class="form-control mx-3 text-right" type="text" path="client.email" />
-                </div>
-                <div class="col-auto form-group row">
-                    <label class="col-form-label">Telefon:</label>
-                    <form:input class="form-control ml-3 text-right" type="text" path="client.tel" />
-                </div>
-            </div>
-            <div>
-                <label class="col-form-label">Komentarz:</label>
-                <form:textarea rows="4" cols="30" class="form-control" type="text" path="comments" />
-            </div>
-
-        </form:form>
-
         <form:form action="newCaseInOrder" method="GET">
             <input name="order" type="hidden" value="${order}"/>
             <input type="submit" value="Dodaj Skrzynkę" class="btn btn-dark my-3" />
@@ -81,6 +51,7 @@
                     <th scope="col">Koła</th>
                     <th scope="col">Zamki</th>
                     <th scope="col">Uwagi</th>
+                    <th scope="col">Ilość</th>
                     <th scope="col">Akcja</th>
                 </tr>
 
@@ -108,6 +79,7 @@
                         <td> ${tempCase.getWheels()} - ${tempCase.getWheelNum()}</td>
                         <td> ${tempCase.locks.getLocks()}
                         <td> ${tempCase.comments}</td>
+                        <td> </td>
                         <td>
                             <a href="${updateLink}">Modyfikuj</a>
                              |
@@ -121,6 +93,39 @@
             </c:forEach>
 
         </table>
+        <hr>
+
+
+        <h3 class="">Dane kontaktowe:</h3>
+        <form:form action="sendOrder" modelAttribute="order" method="POST">
+            <form:hidden path="id"/>
+
+            <div class="form-inline">
+                <div class="col-auto form-group row">
+                    <label class="col-form-label">Imię:</label>
+                    <form:input class="form-control mx-3 text-right" type="text" path="client.name" />
+                </div>
+                <div class="col-auto form-group row">
+                    <label class="col-form-label">Nazwisko:</label>
+                    <form:input class="form-control mx-3 text-right" type="text" path="client.surname" />
+                </div>
+                <div class="col-auto form-group row">
+                    <label class="col-form-label">Email:</label>
+                    <form:input class="form-control mx-3 text-right" type="text" path="client.email" />
+                </div>
+                <div class="col-auto form-group row">
+                    <label class="col-form-label">Telefon:</label>
+                    <form:input class="form-control ml-3 text-right" type="text" path="client.tel" />
+                </div>
+            </div>
+            <div>
+                <label class="col-form-label">Komentarz:</label>
+                <form:textarea rows="4" cols="30" class="form-control" type="text" path="comments" />
+            </div>
+
+            <button type="submit" class="btn btn-dark my-3" >Wyślij zapytanie</button>
+
+         </form:form>
 
         <a href="${pageContext.request.contextPath}/clientOrders?clientId=${clientId}">Wróć do zamówień</a>
 	
