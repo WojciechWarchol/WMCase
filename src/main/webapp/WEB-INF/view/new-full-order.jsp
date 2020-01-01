@@ -70,16 +70,16 @@
 
                 <tbody>
                     <tr>
-                        <td> ${tempCase.length} x ${tempCase.width} x ${tempCase.height} mm</td>
-                        <td> ${tempCase.type.getType()}</td>
-                        <td> ${tempCase.material.getMaterial()}</td>
-                        <td> ${tempCase.color.getColor()}</td>
-                        <td> ${tempCase.filling.getFilling()}</td>
-                        <td> ${tempCase.handle.getHandle()} - ${tempCase.getHandleNum() } </td>
-                        <td> ${tempCase.getWheels()} - ${tempCase.getWheelNum()}</td>
-                        <td> ${tempCase.locks.getLocks()}
-                        <td> ${tempCase.comments}</td>
-                        <td> </td>
+                        <td> ${tempCase.key.length} x ${tempCase.key.width} x ${tempCase.key.height} mm</td>
+                        <td> ${tempCase.key.type.getType()}</td>
+                        <td> ${tempCase.key.material.getMaterial()}</td>
+                        <td> ${tempCase.key.color.getColor()}</td>
+                        <td> ${tempCase.key.filling.getFilling()}</td>
+                        <td> ${tempCase.key.handle.getHandle()} - ${tempCase.getHandleNum() } </td>
+                        <td> ${tempCase.key.getWheels()} - ${tempCase.getWheelNum()}</td>
+                        <td> ${tempCase.key.locks.getLocks()}
+                        <td> ${tempCase.key.comments}</td>
+                        <td> ${tempCase.value}</td>
                         <td>
                             <a href="${updateLink}">Modyfikuj</a>
                              |

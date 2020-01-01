@@ -37,7 +37,7 @@ CREATE TABLE `cases` (
 	`height` int NOT NULL,
 	`surface` decimal(9,2) NOT NULL,
 	`type` varchar(40) ,
-	`material` varchar(40) ,
+	`material` varchar(40)
 	`color` varchar(40) ,
 	`filling` varchar(40) ,
 	`handle` varchar(40) ,
@@ -51,3 +51,13 @@ CREATE TABLE `cases` (
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`order_id`) REFERENCES orders(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `quantities`;
+CREATE TABLE `quantities` (
+    `order_id` int NOT NULL,
+    `case_id` int NOT NULL,
+    `quantity` int NOT NULL DEFAULT 1,
+    FOREIGN KEY (`order_id`) REFERENCES orders(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`case_id`) REFERENCES case(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

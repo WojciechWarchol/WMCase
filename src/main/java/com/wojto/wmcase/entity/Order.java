@@ -4,9 +4,7 @@ import com.wojto.wmcase.enums.OrderStatus;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Proxy(lazy=false)  // test
@@ -20,7 +18,7 @@ public class Order {
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="order_id")
-	private List<Case> cases;
+	private Map<Case, Integer> cases;
 	
 	@Column(name="comments")
 	private String comments;
@@ -41,12 +39,12 @@ public class Order {
 		super();
 	}
 	
-	public Order(int id, List<Case> cases, String uwagi) {
+	public Order(int id, Map<Case, Integer> cases, String uwagi) {
 		this.id = id;
 		this.cases = cases;
 		this.comments = uwagi;
-		for(Case skrzynka : cases) {
-			this.charge += skrzynka.getPrice();
+		for(Map.Entry<Case, Integer> entry : cases.entrySet()) {
+			this.charge += ( entry.getKey().getPrice() * entry.getValue() );
 		}
 		this.orderStatus = OrderStatus.ZAPYTANIE;
 		this.date = new Date();
@@ -62,14 +60,14 @@ public class Order {
 		this.id = id;
 	}
 
-	public List<Case> getCases() {
+	public Map<Case, Integer> getCases() {
 		if(cases == null) {
-			this.cases = new ArrayList<Case>();
+			this.cases = new HashMap<Case, Integer>();
 		}
 		return cases;
 	}
 
-	public void setCases(List<Case> cases) {
+	public void setCases(Map<Case, Integer> cases) {
 		this.cases = cases;
 	}
 
@@ -83,8 +81,8 @@ public class Order {
 
 	public double getCharge() {
 		double charge = 0;
-		for(Case tempCase : cases) {
-			charge += tempCase.getPrice();
+		for(Map.Entry<Case, Integer> entry : cases.entrySet()) {
+			charge += ( entry.getKey().getPrice() * entry.getValue() );
 		}
 		this.charge = charge;
 		return charge;
@@ -125,11 +123,11 @@ public class Order {
 	// Inne metody
 	public boolean addCase(Case skrzynka) {
 		if(cases == null) {
-			this.cases = new ArrayList<Case>();
+			this.cases = new HashMap<Case, Integer>();
 		}
 		
 		if(skrzynka != null) {
-			cases.add(skrzynka);
+			cases.put(skrzynka, 1);
 			return true;
 		}
 		
@@ -140,8 +138,8 @@ public class Order {
 	}
 	
 	public boolean deleteCase(int id) {
-		if(id >= 0 && id <= cases.size()) {
-			for(Case case1 : cases) {
+		if(id >= 0) {
+			for(Case case1 : cases.keySet()) {
 				if(case1.getId() == id) {
 					cases.remove(case1);
 					return true;
@@ -150,10 +148,23 @@ public class Order {
 		}
 		return false;
 	}
+
+	public boolean changeQuantity(int id, int quantity) {
+		if(id >= 0 && quantity == 0)   deleteCase(id);
+		if(id >= 0 && quantity >= 0) {
+			for(Map.Entry<Case, Integer> entry : cases.entrySet()) {
+				if(entry.getKey().getId() == id) {
+					entry.setValue(quantity);
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 	
 	public void orderSummary() {
 		System.out.println("Zamówienie nr " + id + "\nZawiera:\n");
-		for(Case case1 : cases) {
+		for(Case case1 : cases.keySet()) {
 			System.out.println(case1.toString());
 		}
 	}
