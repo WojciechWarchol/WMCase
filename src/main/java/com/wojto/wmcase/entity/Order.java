@@ -16,8 +16,15 @@ public class Order {
 	@Column(name="id")
 	private int id;
 	
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="order_id")
+//	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ElementCollection
+	@JoinTable(name="quantities",
+		joinColumns = {@JoinColumn(name="order_id", referencedColumnName="id")}
+//		,
+//		inverseJoinColumns = {@JoinColumn(name="case_id", referencedColumnName="id")}
+		)
+	@MapKeyJoinColumn(name="case_id")
+	@Column(name="quantity")
 	private Map<Case, Integer> cases;
 	
 	@Column(name="comments")
@@ -65,6 +72,13 @@ public class Order {
 			this.cases = new HashMap<Case, Integer>();
 		}
 		return cases;
+	}
+
+	public List<Case> getCaseList(){
+		if(cases == null) {
+			this.cases = new HashMap<Case, Integer>();
+		}
+		return new ArrayList<>(cases.keySet());
 	}
 
 	public void setCases(Map<Case, Integer> cases) {
@@ -149,7 +163,7 @@ public class Order {
 		return false;
 	}
 
-	public boolean changeQuantity(int id, int quantity) {
+	public boolean setQuantity(int id, int quantity) {
 		if(id >= 0 && quantity == 0)   deleteCase(id);
 		if(id >= 0 && quantity >= 0) {
 			for(Map.Entry<Case, Integer> entry : cases.entrySet()) {

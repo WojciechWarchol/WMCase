@@ -28,7 +28,9 @@ public class WMCaseController {
 		
 		return "hello";
 	}
-	
+
+
+	// Admin side methods
 	@GetMapping("/clientList")
 	public String listClients(Model theModel) {
 		
@@ -181,6 +183,34 @@ public class WMCaseController {
 		
 		return "new-full-order";
 	}
+
+	@GetMapping("/newCaseInOrder")
+	public String createNewCaseInOrder(@ModelAttribute("order") Order theOrder,
+									   Model theModel) {
+
+		Case theCase = new Case();
+
+		theModel.addAttribute("case", theCase);
+		theModel.addAttribute("order", theOrder);
+
+		return "new-case-in-order";
+	}
+
+	@PostMapping("/addCaseToOrder")
+	public String addCaseToOrder(@ModelAttribute("case") Case theCase,
+								 @ModelAttribute("order") Order theOrder,
+								 Model theModel) {
+
+		System.out.println("Executing the addCaseToOrderMethod");
+		theCase.evaluation();
+		theOrder.addCase(theCase);
+		theOrder.getCharge();
+		System.out.println(theCase.toString());
+		theModel.addAttribute("order", theOrder);
+		System.out.println(theOrder.getCases().size());
+
+		return "redirect:/continueOrder";
+	}
 	
 	@GetMapping("/continueOrder")
 	public String continueOrder(@ModelAttribute("order") Order theOrder,
@@ -191,6 +221,15 @@ public class WMCaseController {
 		System.out.println("Executing the continueOrder method");
 		System.out.println(theOrder.getCases().size());
 		
+		return "new-full-order";
+	}
+
+	@PutMapping("/updateQuantity")
+	public String updateQuantity(@ModelAttribute("tempCase") Case theCase,
+								 Model theModel) {
+
+
+
 		return "new-full-order";
 	}
 	
@@ -206,34 +245,6 @@ public class WMCaseController {
 		service.saveOrder(theOrder);
 		
 		return "list-clients";
-	}
-	
-	@GetMapping("/newCaseInOrder")
-	public String createNewCaseInOrder(@ModelAttribute("order") Order theOrder,
-										Model theModel) {
-		
-		Case theCase = new Case();
-		
-		theModel.addAttribute("case", theCase);
-		theModel.addAttribute("order", theOrder);
-		
-		return "new-case-in-order";
-	}
-	
-	@PostMapping("/addCaseToOrder")
-	public String addCaseToOrder(@ModelAttribute("case") Case theCase,
-								 @ModelAttribute("order") Order theOrder,
-								 Model theModel) {
-		
-		System.out.println("Executing the addCaseToOrderMethod");
-		theCase.evaluation();
-		theOrder.addCase(theCase);
-		theOrder.getCharge();
-		System.out.println(theCase.toString());
-		theModel.addAttribute("order", theOrder);
-		System.out.println(theOrder.getCases().size());
-		
-		return "redirect:/continueOrder";
 	}
 	
 	// Add Update, and Delete for client side

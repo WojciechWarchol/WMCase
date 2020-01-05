@@ -55,8 +55,8 @@
                     <th scope="col">Akcja</th>
                 </tr>
 
-            <c:forEach var="tempCase" items="${order.getCases()}">
-            <%-- <c:forEach var="tempCase" items="${cases}"> --%>
+            <c:forEach var="tempCase" items="${order.getCaseList()}">
+
             <!-- Update and delete Links -->
             <c:url var="updateLink" value="/updateCase">
                 <c:param name="caseId" value="${tempCase.id}"/>
@@ -77,9 +77,14 @@
                         <td> ${tempCase.key.filling.getFilling()}</td>
                         <td> ${tempCase.key.handle.getHandle()} - ${tempCase.getHandleNum() } </td>
                         <td> ${tempCase.key.getWheels()} - ${tempCase.getWheelNum()}</td>
-                        <td> ${tempCase.key.locks.getLocks()}
+                        <td> ${tempCase.key.locks.getLocks()} </td>
                         <td> ${tempCase.key.comments}</td>
-                        <td> ${tempCase.value}</td>
+                        <td>
+                            <form:form action="updateQuantity" method="PUT">
+                            <form:input class="form-control col text-right"
+                                        path="order.cases"
+                                        value="${order.getCases().get(tempCase)}"/>
+                            </form:form></td>
                         <td>
                             <a href="${updateLink}">Modyfikuj</a>
                              |
