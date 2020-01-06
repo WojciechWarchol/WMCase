@@ -23,6 +23,7 @@ CREATE TABLE `orders` (
 	`comments` text,
 	`charge` decimal(9,2) NOT NULL,
 	`orderstatus` varchar(40) NOT NULL,
+	`dt` date,
 	`client_id` int NOT NULL,
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`client_id`) REFERENCES clients(`id`) ON DELETE CASCADE

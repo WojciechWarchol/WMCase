@@ -33,7 +33,7 @@ public class Order {
 	private double charge;
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
-	@Column(name="date")
+	@Column(name="dt")
 	private Date date;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
