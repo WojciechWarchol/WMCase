@@ -84,7 +84,7 @@
 
                                 <form:input class=""
                                             path="cases"
-                                            value="${order.getCases().get(tempCase)}"/>
+                                            value="${order.getCases().get(tempCase).getQuantity()}"/>
                             </form:form></td>
                         <td>
                             <a href="${updateLink}">Modyfikuj</a>

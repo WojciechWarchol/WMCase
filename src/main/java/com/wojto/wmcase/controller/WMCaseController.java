@@ -242,8 +242,12 @@ public class WMCaseController {
 		theOrder.setCharge(100);
 		Client theClient = theOrder.getClient();
 		service.saveClient(theClient);
+		List<Case> caseList = theOrder.getCaseList();
+		for (Case theCase : caseList){
+			service.saveCase(theCase);
+		}
 		service.saveOrder(theOrder);
-		
+		System.out.println("Code got here");
 		return "list-clients";
 	}
 	

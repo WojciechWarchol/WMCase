@@ -52,7 +52,7 @@ public class Case {
 	private double price;
 	
 	// Testing a bi-directional relationship
-	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, 
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
 						CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinColumn(name="order_id")
 	private Order order;

@@ -53,12 +53,19 @@ CREATE TABLE `cases` (
 	FOREIGN KEY (`order_id`) REFERENCES orders(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
-
 DROP TABLE IF EXISTS `quantities`;
 CREATE TABLE `quantities` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `quantity` int DEFAULT 1,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `case_quantities`;
+CREATE TABLE `case_quantities` (
     `order_id` int NOT NULL,
     `case_id` int NOT NULL,
-    `quantity` int NOT NULL DEFAULT 1,
+    `quantity_id` int NOT NULL,
     FOREIGN KEY (`order_id`) REFERENCES orders(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`case_id`) REFERENCES cases(`id`) ON DELETE CASCADE
+--    PRIMARY KEY (`order_id`, `case_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;

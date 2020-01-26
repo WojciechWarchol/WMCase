@@ -16,16 +16,20 @@ public class Order {
 	@Column(name="id")
 	private int id;
 	
-//	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@ElementCollection
-	@JoinTable(name="quantities",
-		joinColumns = {@JoinColumn(name="order_id", referencedColumnName="id")}
-//		,
-//		inverseJoinColumns = {@JoinColumn(name="case_id", referencedColumnName="id")}
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@JoinTable(name="case_quantities",
+		joinColumns = {@JoinColumn(name="order_id", referencedColumnName="id")},
+//			@JoinColumn(name="case_id", referencedColumnName="id")}
+		inverseJoinColumns = {@JoinColumn(name="quantity_id", referencedColumnName="id")}
 		)
 	@MapKeyJoinColumn(name="case_id")
-	@Column(name="quantity")
-	private Map<Case, Integer> cases;
+//	@ElementCollection
+//	@CollectionTable(name="quantities")
+//		joinColumns=@JoinColumn(name="order_id", referencedColumnName = "id")
+//		)
+//	@MapKeyJoinColumn(name="case_id", referencedColumnName = "id")
+//	@Column(name="quantity")
+	private Map<Case, Quantity> cases;
 	
 	@Column(name="comments")
 	private String comments;
@@ -46,12 +50,12 @@ public class Order {
 		super();
 	}
 	
-	public Order(int id, Map<Case, Integer> cases, String uwagi) {
+	public Order(int id, Map<Case, Quantity> cases, String uwagi) {
 		this.id = id;
 		this.cases = cases;
 		this.comments = uwagi;
-		for(Map.Entry<Case, Integer> entry : cases.entrySet()) {
-			this.charge += ( entry.getKey().getPrice() * entry.getValue() );
+		for(Map.Entry<Case, Quantity> entry : cases.entrySet()) {
+			this.charge += ( entry.getKey().getPrice() * entry.getValue().getQuantity() );
 		}
 		this.orderStatus = OrderStatus.ZAPYTANIE;
 		this.date = new Date();
@@ -67,21 +71,21 @@ public class Order {
 		this.id = id;
 	}
 
-	public Map<Case, Integer> getCases() {
+	public Map<Case, Quantity> getCases() {
 		if(cases == null) {
-			this.cases = new HashMap<Case, Integer>();
+			this.cases = new HashMap<Case, Quantity>();
 		}
 		return cases;
 	}
 
 	public List<Case> getCaseList(){
 		if(cases == null) {
-			this.cases = new HashMap<Case, Integer>();
+			this.cases = new HashMap<Case, Quantity>();
 		}
 		return new ArrayList<>(cases.keySet());
 	}
 
-	public void setCases(Map<Case, Integer> cases) {
+	public void setCases(Map<Case, Quantity> cases) {
 		this.cases = cases;
 	}
 
@@ -95,8 +99,8 @@ public class Order {
 
 	public double getCharge() {
 		double charge = 0;
-		for(Map.Entry<Case, Integer> entry : cases.entrySet()) {
-			charge += ( entry.getKey().getPrice() * entry.getValue() );
+		for(Map.Entry<Case, Quantity> entry : cases.entrySet()) {
+			charge += ( entry.getKey().getPrice() * entry.getValue().getQuantity() );
 		}
 		this.charge = charge;
 		return charge;
@@ -137,11 +141,11 @@ public class Order {
 	// Inne metody
 	public boolean addCase(Case skrzynka) {
 		if(cases == null) {
-			this.cases = new HashMap<Case, Integer>();
+			this.cases = new HashMap<Case, Quantity>();
 		}
 		
 		if(skrzynka != null) {
-			cases.put(skrzynka, 1);
+			cases.put(skrzynka, new Quantity(1));
 			return true;
 		}
 		
@@ -166,9 +170,9 @@ public class Order {
 	public boolean setQuantity(int id, int quantity) {
 		if(id >= 0 && quantity == 0)   deleteCase(id);
 		if(id >= 0 && quantity >= 0) {
-			for(Map.Entry<Case, Integer> entry : cases.entrySet()) {
+			for(Map.Entry<Case, Quantity> entry : cases.entrySet()) {
 				if(entry.getKey().getId() == id) {
-					entry.setValue(quantity);
+					entry.getValue().setQuantity(quantity);
 				}
 			}
 			return true;
