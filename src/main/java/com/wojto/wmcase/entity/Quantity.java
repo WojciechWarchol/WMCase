@@ -14,6 +14,8 @@ public class Quantity {
     @Column(name="quantity")
     private int quantity;
 
+    public Quantity(){};
+
     public Quantity(int id, int quantity) {
 //        this.associatedOrder = associatedOrder;
 //        this.associatedCase = associatedCase;

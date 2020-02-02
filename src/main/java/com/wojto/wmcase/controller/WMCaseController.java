@@ -4,6 +4,7 @@ package com.wojto.wmcase.controller;
 import com.wojto.wmcase.entity.Case;
 import com.wojto.wmcase.entity.Client;
 import com.wojto.wmcase.entity.Order;
+import com.wojto.wmcase.entity.Quantity;
 import com.wojto.wmcase.enums.OrderStatus;
 import com.wojto.wmcase.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,10 @@ public class WMCaseController {
 		return "hello";
 	}
 
+	/*
+	 * Admin side methods
+	 */
 
-	// Admin side methods
 	@GetMapping("/clientList")
 	public String listClients(Model theModel) {
 		
@@ -164,8 +167,10 @@ public class WMCaseController {
 
 		return "redirect:/updateOrder";
 	}
-	
-	// Client side order with cases creation
+
+	/*
+	 * Client side Methods
+	 */
 	
 	@GetMapping("/newClientOrder")
 	public String createNewOrder(Model theModel) {
@@ -214,9 +219,13 @@ public class WMCaseController {
 	
 	@GetMapping("/continueOrder")
 	public String continueOrder(@ModelAttribute("order") Order theOrder,
+								@ModelAttribute("tempCase.value") Quantity theQuantity,
 								Model theModel) {
 		
 		theModel.addAttribute("order", theOrder);
+
+		Quantity tempQuantity = new Quantity();
+		theModel.addAttribute("tempQuantity", tempQuantity);
 		
 		System.out.println("Executing the continueOrder method");
 		System.out.println(theOrder.getCases().size());
@@ -224,14 +233,28 @@ public class WMCaseController {
 		return "new-full-order";
 	}
 
-	@PutMapping("/updateQuantity")
-	public String updateQuantity(@ModelAttribute("tempCase") Case theCase,
+	@PostMapping("/updateQuantity")
+	public String updateQuantity(@ModelAttribute("tempQuantity") Quantity tempQuantity,
+								 @ModelAttribute("tempCase") String tempCaseString,
+								 @ModelAttribute("order") Order theOrder,
 								 Model theModel) {
 
+		for (Case checkedCase : theOrder.getCaseList()) {
+			if (checkedCase.toString().equals(tempCaseString)) {
+				System.out.println("Found equal cases");
+				theOrder.getCases().get(checkedCase).setQuantity(tempQuantity.getQuantity());
+			}
+		}
 
+		theModel.addAttribute(theOrder);
 
-		return "new-full-order";
+		return "redirect:/continueOrder";
 	}
+
+	//TODO Modify Case method
+
+	//TODO Delete Case method
+
 	
 	@PostMapping("/sendOrder")
 	public String sendOrder(@ModelAttribute("order") Order theOrder,

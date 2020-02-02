@@ -8,8 +8,8 @@
 <html lang="pl">
 
 <head>
-<title>WMCASE - skrzynki</title>
-
+    <title>WMCASE - skrzynki</title>
+	<meta charset="UTF-8">
 
 <!-- 
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
