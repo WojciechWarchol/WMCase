@@ -194,9 +194,11 @@ public class WMCaseController {
 									   Model theModel) {
 
 		Case theCase = new Case();
+		int intQuantity = 1;
 
 		theModel.addAttribute("case", theCase);
 		theModel.addAttribute("order", theOrder);
+		theModel.addAttribute("quantity", intQuantity);
 
 		return "new-case-in-order";
 	}
@@ -204,22 +206,24 @@ public class WMCaseController {
 	@PostMapping("/addCaseToOrder")
 	public String addCaseToOrder(@ModelAttribute("case") Case theCase,
 								 @ModelAttribute("order") Order theOrder,
+								 @ModelAttribute("quantity") int intQuantity,
 								 Model theModel) {
 
 		System.out.println("Executing the addCaseToOrderMethod");
 		theCase.evaluation();
-		theOrder.addCase(theCase);
+		theOrder.addCase(theCase, new Quantity(intQuantity));
 		theOrder.getCharge();
 		System.out.println(theCase.toString());
 		theModel.addAttribute("order", theOrder);
 		System.out.println(theOrder.getCases().size());
+
+		System.out.println("The Order contains: " + theOrder.getCases().toString());
 
 		return "redirect:/continueOrder";
 	}
 	
 	@GetMapping("/continueOrder")
 	public String continueOrder(@ModelAttribute("order") Order theOrder,
-								@ModelAttribute("tempCase.value") Quantity theQuantity,
 								Model theModel) {
 		
 		theModel.addAttribute("order", theOrder);
@@ -239,19 +243,30 @@ public class WMCaseController {
 								 @ModelAttribute("order") Order theOrder,
 								 Model theModel) {
 
-		for (Case checkedCase : theOrder.getCaseList()) {
-			if (checkedCase.toString().equals(tempCaseString)) {
-				System.out.println("Found equal cases");
-				theOrder.getCases().get(checkedCase).setQuantity(tempQuantity.getQuantity());
-			}
-		}
+		Case theCase = service.findCaseInOrder(theOrder, tempCaseString);
+		theOrder.getCases().get(theCase).setQuantity(tempQuantity.getQuantity());
 
 		theModel.addAttribute(theOrder);
 
 		return "redirect:/continueOrder";
 	}
+	
+	@GetMapping("/updateCaseInClientOrder")
+	public String modifyOrderCase(@ModelAttribute("tempCase") String tempCaseString,
+								  @ModelAttribute("order") Order theOrder,
+								  Model theModel) {
 
-	//TODO Modify Case method
+		Case theCase = service.findCaseInOrder(theOrder, tempCaseString);
+		int intQuantity = theOrder.getCases().get(theCase).getQuantity();
+		theOrder.getCases().remove(theCase);
+
+		theModel.addAttribute("case", theCase);
+		theModel.addAttribute("order", theOrder);
+		theModel.addAttribute("quantity", intQuantity);
+
+		return "new-case-in-order";
+	}
+
 
 	//TODO Delete Case method
 

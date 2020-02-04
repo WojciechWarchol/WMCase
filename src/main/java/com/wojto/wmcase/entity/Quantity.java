@@ -17,8 +17,6 @@ public class Quantity {
     public Quantity(){};
 
     public Quantity(int id, int quantity) {
-//        this.associatedOrder = associatedOrder;
-//        this.associatedCase = associatedCase;
         this.id = id;
         this.quantity = quantity;
     }
@@ -42,5 +40,13 @@ public class Quantity {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Quantity{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                '}';
     }
 }

@@ -148,10 +148,24 @@ public class Order {
 			cases.put(skrzynka, new Quantity(1));
 			return true;
 		}
-		
-		// Not sure if this is good practice
+
 		skrzynka.setOrder(this);
 		
+		return false;
+	}
+
+	public boolean addCase(Case skrzynka, Quantity ilosc) {
+		if(cases == null) {
+			this.cases = new HashMap<Case, Quantity>();
+		}
+
+		if(skrzynka != null && ilosc != null) {
+			cases.put(skrzynka, ilosc);
+			return true;
+		}
+
+		skrzynka.setOrder(this);
+
 		return false;
 	}
 	
@@ -186,5 +200,6 @@ public class Order {
 			System.out.println(case1.toString());
 		}
 	}
-	
+
+
 }

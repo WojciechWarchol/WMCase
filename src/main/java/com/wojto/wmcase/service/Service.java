@@ -1,10 +1,10 @@
 package com.wojto.wmcase.service;
 
-import java.util.List;
-
 import com.wojto.wmcase.entity.Case;
 import com.wojto.wmcase.entity.Client;
 import com.wojto.wmcase.entity.Order;
+
+import java.util.List;
 
 public interface Service {
 
@@ -26,6 +26,8 @@ public interface Service {
 	
 	public void saveClient(Client theClient);
 	public void deleteClient(int theId);
+
+	public Case findCaseInOrder(Order theOrder, String tempCaseString);
 	
 		
 }

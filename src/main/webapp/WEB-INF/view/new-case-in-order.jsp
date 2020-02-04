@@ -33,6 +33,7 @@
 		<form:form action="addCaseToOrder" modelAttribute="case" method="POST">
 
 			<form:hidden path="id" />
+			<input name="quantity" type="hidden" value="${quantity}"/>
 			<%-- <input name="orderId" type="hidden" value="${orderId}"/>
 			<input name="clientId" type="hidden" value="${clientId}"/> --%>
 
