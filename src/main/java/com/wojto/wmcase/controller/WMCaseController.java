@@ -268,7 +268,18 @@ public class WMCaseController {
 	}
 
 
-	//TODO Delete Case method
+	@GetMapping("/deleteCaseInClientOrder")
+	public String deleteOrderCase(@ModelAttribute("tempCase") String tempCaseString,
+								  @ModelAttribute("order") Order theOrder,
+								  Model theModel) {
+
+		Case theCaseToDelete = service.findCaseInOrder(theOrder, tempCaseString);
+		theOrder.getCases().remove(theCaseToDelete);
+
+		theModel.addAttribute("order", theOrder);
+
+		return "redirect:/continueOrder";
+	}
 
 	
 	@PostMapping("/sendOrder")

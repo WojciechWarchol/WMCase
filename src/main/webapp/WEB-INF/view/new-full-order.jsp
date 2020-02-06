@@ -68,9 +68,9 @@
                 <c:param name="order" value="${order}" />
             </c:url>
 
-            <c:url var="deleteLink" value="/deleteCase">
-                <c:param name="caseId" value="${tempCase.key.id}"/>
-                <c:param name="orderId" value="${order}" />
+            <c:url var="deleteLink" value="/deleteCaseInClientOrder">
+                <c:param name="tempCase" value="${tempCase.key}"/>
+                <c:param name="order" value="${order}" />
             </c:url> 
 
                 <tbody>
