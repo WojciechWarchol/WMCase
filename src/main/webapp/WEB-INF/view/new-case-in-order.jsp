@@ -8,8 +8,8 @@
 <html lang="pl">
 
 <head>
-<title>WMCASE - skrzynki</title>
-
+    <title>WMCASE - skrzynki</title>
+	<meta charset="UTF-8">
 
 <!-- 
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
@@ -33,6 +33,7 @@
 		<form:form action="addCaseToOrder" modelAttribute="case" method="POST">
 
 			<form:hidden path="id" />
+			<input name="quantity" type="hidden" value="${quantity}"/>
 			<%-- <input name="orderId" type="hidden" value="${orderId}"/>
 			<input name="clientId" type="hidden" value="${clientId}"/> --%>
 

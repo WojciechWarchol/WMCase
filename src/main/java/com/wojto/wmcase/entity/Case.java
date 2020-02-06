@@ -4,6 +4,7 @@ import com.wojto.wmcase.enums.*;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 
 @Entity
@@ -52,7 +53,7 @@ public class Case {
 	private double price;
 	
 	// Testing a bi-directional relationship
-	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, 
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
 						CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinColumn(name="order_id")
 	private Order order;
@@ -267,14 +268,40 @@ public class Case {
 
 	@Override
 	public String toString() {
-		return "Case o wymiarach: " + length + "x" + width + "x" + height + "mm i powierzchni " 
+		return "ID: " + id +
+				", Case o wymiarach: " + length + "x" + width + "x" + height + "mm i powierzchni "
 				+ surface + "m2, typ=" + type
 				+ ", material=" + material + ", kolor=" + color + ", wypelnienie=" + filling + ", uchwyty="
 				+ handle + ", iloscUchwytow=" + handleNum + ", kola=" + wheels + ", iloscKol=" + wheelNum
-				+ ", zamki=" + locks + ", uwagi=" + comments + ", cena=" + price + "zł]";
+				+ ", zamki=" + locks + ", uwagi=" + comments + ", cena=" + price + "zl]";
 	}
-	
 
-	
-	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Case aCase = (Case) o;
+		return id == aCase.id &&
+				length == aCase.length &&
+				width == aCase.width &&
+				height == aCase.height &&
+				Double.compare(aCase.surface, surface) == 0 &&
+				handleNum == aCase.handleNum &&
+				wheels == aCase.wheels &&
+				wheelNum == aCase.wheelNum &&
+				Double.compare(aCase.price, price) == 0 &&
+				type == aCase.type &&
+				material == aCase.material &&
+				color == aCase.color &&
+				filling == aCase.filling &&
+				handle == aCase.handle &&
+				locks == aCase.locks &&
+				Objects.equals(comments, aCase.comments) &&
+				order.equals(aCase.order);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, length, width, height, surface, type, material, color, filling, handle, handleNum, wheels, wheelNum, locks, comments, price, order);
+	}
 }

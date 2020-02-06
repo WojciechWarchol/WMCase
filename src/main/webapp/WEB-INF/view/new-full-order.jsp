@@ -56,30 +56,43 @@
                 </tr>
 
             <c:forEach var="tempCase" items="${order.getCases()}">
-            <%-- <c:forEach var="tempCase" items="${cases}"> --%>
-            <!-- Update and delete Links -->
-            <c:url var="updateLink" value="/updateCase">
-                <c:param name="caseId" value="${tempCase.id}"/>
-                <c:param name="orderId" value="${order}" />
+
+            <!-- Update case, quantity and delete Links -->
+            <c:url var="updateQuantityLink" value="/updateQuantity">
+                <c:param name="tempCase" value="${tempCase}"/>
+                <c:param name="order" value="${order}"/>
             </c:url>
 
-            <c:url var="deleteLink" value="/deleteCase">
-                <c:param name="caseId" value="${tempCase.id}"/>
-                <c:param name="orderId" value="${order}" />
+            <c:url var="updateLink" value="/updateCaseInClientOrder">
+                <c:param name="tempCase" value="${tempCase.key}"/>
+                <c:param name="order" value="${order}" />
             </c:url>
+
+            <c:url var="deleteLink" value="/deleteCaseInClientOrder">
+                <c:param name="tempCase" value="${tempCase.key}"/>
+                <c:param name="order" value="${order}" />
+            </c:url> 
 
                 <tbody>
                     <tr>
-                        <td> ${tempCase.length} x ${tempCase.width} x ${tempCase.height} mm</td>
-                        <td> ${tempCase.type.getType()}</td>
-                        <td> ${tempCase.material.getMaterial()}</td>
-                        <td> ${tempCase.color.getColor()}</td>
-                        <td> ${tempCase.filling.getFilling()}</td>
-                        <td> ${tempCase.handle.getHandle()} - ${tempCase.getHandleNum() } </td>
-                        <td> ${tempCase.getWheels()} - ${tempCase.getWheelNum()}</td>
-                        <td> ${tempCase.locks.getLocks()}
-                        <td> ${tempCase.comments}</td>
-                        <td> </td>
+                        <td> ${tempCase.key.length} x ${tempCase.key.width} x ${tempCase.key.height} mm</td>
+                        <td> ${tempCase.key.type.getType()}</td>
+                        <td> ${tempCase.key.material.getMaterial()}</td>
+                        <td> ${tempCase.key.color.getColor()}</td>
+                        <td> ${tempCase.key.filling.getFilling()}</td>
+                        <td> ${tempCase.key.handle.getHandle()} - ${tempCase.key.getHandleNum() } </td>
+                        <td> ${tempCase.key.getWheels()} - ${tempCase.key.getWheelNum()}</td>
+                        <td> ${tempCase.key.locks.getLocks()} </td>
+                        <td> ${tempCase.key.comments}</td>
+                        <td>
+                            <form:form action="updateQuantity" modelAttribute="tempQuantity" method="PUT">
+                                <input name="tempCase" type="hidden" value="${tempCase.key}"/>
+                                <form:input class=""
+                                            path="quantity"
+                                            value="${tempCase.value.quantity}"
+                                            />
+                                <button type="submit" class="btn btn-link my-3" > Zapisz ilość</button>
+                            </form:form></td>
                         <td>
                             <a href="${updateLink}">Modyfikuj</a>
                              |

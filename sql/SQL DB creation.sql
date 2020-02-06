@@ -23,6 +23,7 @@ CREATE TABLE `orders` (
 	`comments` text,
 	`charge` decimal(9,2) NOT NULL,
 	`orderstatus` varchar(40) NOT NULL,
+	`dt` date,
 	`client_id` int NOT NULL,
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`client_id`) REFERENCES clients(`id`) ON DELETE CASCADE
@@ -37,7 +38,7 @@ CREATE TABLE `cases` (
 	`height` int NOT NULL,
 	`surface` decimal(9,2) NOT NULL,
 	`type` varchar(40) ,
-	`material` varchar(40) ,
+	`material` varchar(40),
 	`color` varchar(40) ,
 	`filling` varchar(40) ,
 	`handle` varchar(40) ,
@@ -51,3 +52,20 @@ CREATE TABLE `cases` (
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`order_id`) REFERENCES orders(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `quantities`;
+CREATE TABLE `quantities` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `quantity` int DEFAULT 1,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `case_quantities`;
+CREATE TABLE `case_quantities` (
+    `order_id` int NOT NULL,
+    `case_id` int NOT NULL,
+    `quantity_id` int NOT NULL,
+    FOREIGN KEY (`order_id`) REFERENCES orders(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`case_id`) REFERENCES cases(`id`) ON DELETE CASCADE
+--    PRIMARY KEY (`order_id`, `case_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;

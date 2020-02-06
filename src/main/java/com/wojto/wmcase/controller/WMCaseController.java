@@ -4,6 +4,7 @@ package com.wojto.wmcase.controller;
 import com.wojto.wmcase.entity.Case;
 import com.wojto.wmcase.entity.Client;
 import com.wojto.wmcase.entity.Order;
+import com.wojto.wmcase.entity.Quantity;
 import com.wojto.wmcase.enums.OrderStatus;
 import com.wojto.wmcase.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,11 @@ public class WMCaseController {
 		
 		return "hello";
 	}
-	
+
+	/*
+	 * Admin side methods
+	 */
+
 	@GetMapping("/clientList")
 	public String listClients(Model theModel) {
 		
@@ -162,8 +167,10 @@ public class WMCaseController {
 
 		return "redirect:/updateOrder";
 	}
-	
-	// Client side order with cases creation
+
+	/*
+	 * Client side Methods
+	 */
 	
 	@GetMapping("/newClientOrder")
 	public String createNewOrder(Model theModel) {
@@ -181,18 +188,99 @@ public class WMCaseController {
 		
 		return "new-full-order";
 	}
+
+	@GetMapping("/newCaseInOrder")
+	public String createNewCaseInOrder(@ModelAttribute("order") Order theOrder,
+									   Model theModel) {
+
+		Case theCase = new Case();
+		int intQuantity = 1;
+
+		theModel.addAttribute("case", theCase);
+		theModel.addAttribute("order", theOrder);
+		theModel.addAttribute("quantity", intQuantity);
+
+		return "new-case-in-order";
+	}
+
+	@PostMapping("/addCaseToOrder")
+	public String addCaseToOrder(@ModelAttribute("case") Case theCase,
+								 @ModelAttribute("order") Order theOrder,
+								 @ModelAttribute("quantity") int intQuantity,
+								 Model theModel) {
+
+		System.out.println("Executing the addCaseToOrderMethod");
+		theCase.evaluation();
+		theOrder.addCase(theCase, new Quantity(intQuantity));
+		theOrder.getCharge();
+		System.out.println(theCase.toString());
+		theModel.addAttribute("order", theOrder);
+		System.out.println(theOrder.getCases().size());
+
+		System.out.println("The Order contains: " + theOrder.getCases().toString());
+
+		return "redirect:/continueOrder";
+	}
 	
 	@GetMapping("/continueOrder")
 	public String continueOrder(@ModelAttribute("order") Order theOrder,
 								Model theModel) {
 		
 		theModel.addAttribute("order", theOrder);
+
+		Quantity tempQuantity = new Quantity();
+		theModel.addAttribute("tempQuantity", tempQuantity);
 		
 		System.out.println("Executing the continueOrder method");
 		System.out.println(theOrder.getCases().size());
 		
 		return "new-full-order";
 	}
+
+	@PostMapping("/updateQuantity")
+	public String updateQuantity(@ModelAttribute("tempQuantity") Quantity tempQuantity,
+								 @ModelAttribute("tempCase") String tempCaseString,
+								 @ModelAttribute("order") Order theOrder,
+								 Model theModel) {
+
+		Case theCase = service.findCaseInOrder(theOrder, tempCaseString);
+		theOrder.getCases().get(theCase).setQuantity(tempQuantity.getQuantity());
+
+		theModel.addAttribute(theOrder);
+
+		return "redirect:/continueOrder";
+	}
+	
+	@GetMapping("/updateCaseInClientOrder")
+	public String modifyOrderCase(@ModelAttribute("tempCase") String tempCaseString,
+								  @ModelAttribute("order") Order theOrder,
+								  Model theModel) {
+
+		Case theCase = service.findCaseInOrder(theOrder, tempCaseString);
+		int intQuantity = theOrder.getCases().get(theCase).getQuantity();
+		theOrder.getCases().remove(theCase);
+
+		theModel.addAttribute("case", theCase);
+		theModel.addAttribute("order", theOrder);
+		theModel.addAttribute("quantity", intQuantity);
+
+		return "new-case-in-order";
+	}
+
+
+	@GetMapping("/deleteCaseInClientOrder")
+	public String deleteOrderCase(@ModelAttribute("tempCase") String tempCaseString,
+								  @ModelAttribute("order") Order theOrder,
+								  Model theModel) {
+
+		Case theCaseToDelete = service.findCaseInOrder(theOrder, tempCaseString);
+		theOrder.getCases().remove(theCaseToDelete);
+
+		theModel.addAttribute("order", theOrder);
+
+		return "redirect:/continueOrder";
+	}
+
 	
 	@PostMapping("/sendOrder")
 	public String sendOrder(@ModelAttribute("order") Order theOrder,
@@ -203,37 +291,13 @@ public class WMCaseController {
 		theOrder.setCharge(100);
 		Client theClient = theOrder.getClient();
 		service.saveClient(theClient);
+		List<Case> caseList = theOrder.getCaseList();
+		for (Case theCase : caseList){
+			service.saveCase(theCase);
+		}
 		service.saveOrder(theOrder);
-		
+		System.out.println("Code got here");
 		return "list-clients";
-	}
-	
-	@GetMapping("/newCaseInOrder")
-	public String createNewCaseInOrder(@ModelAttribute("order") Order theOrder,
-										Model theModel) {
-		
-		Case theCase = new Case();
-		
-		theModel.addAttribute("case", theCase);
-		theModel.addAttribute("order", theOrder);
-		
-		return "new-case-in-order";
-	}
-	
-	@PostMapping("/addCaseToOrder")
-	public String addCaseToOrder(@ModelAttribute("case") Case theCase,
-								 @ModelAttribute("order") Order theOrder,
-								 Model theModel) {
-		
-		System.out.println("Executing the addCaseToOrderMethod");
-		theCase.evaluation();
-		theOrder.addCase(theCase);
-		theOrder.getCharge();
-		System.out.println(theCase.toString());
-		theModel.addAttribute("order", theOrder);
-		System.out.println(theOrder.getCases().size());
-		
-		return "redirect:/continueOrder";
 	}
 	
 	// Add Update, and Delete for client side

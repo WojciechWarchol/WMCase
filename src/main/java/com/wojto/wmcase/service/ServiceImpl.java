@@ -1,19 +1,13 @@
 package com.wojto.wmcase.service;
 
-import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.wojto.wmcase.dao.CaseDAO;
-import com.wojto.wmcase.dao.CaseDAOImpl;
-import com.wojto.wmcase.dao.ClientDAO;
-import com.wojto.wmcase.dao.OrderDAO;
-import com.wojto.wmcase.dao.OrderDAOImpl;
+import com.wojto.wmcase.dao.*;
 import com.wojto.wmcase.entity.Case;
 import com.wojto.wmcase.entity.Client;
 import com.wojto.wmcase.entity.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @org.springframework.stereotype.Service
 public class ServiceImpl implements Service {
@@ -108,5 +102,16 @@ public class ServiceImpl implements Service {
 	public void deleteClient(int theId) {
 		clientDAO.deleteClient(theId);
 	}
-	
+
+	@Override
+	public Case findCaseInOrder(Order theOrder, String tempCaseString) {
+		for (Case checkedCase : theOrder.getCaseList()) {
+			if (checkedCase.toString().equals(tempCaseString)) {
+				System.out.println("Found equal cases");
+				return checkedCase;
+			}
+		}
+		System.out.println("Error: Case not found!");
+		return null;
+	}
 }

@@ -4,9 +4,7 @@ import com.wojto.wmcase.enums.OrderStatus;
 import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Proxy(lazy=false)  // test
@@ -19,8 +17,19 @@ public class Order {
 	private int id;
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="order_id")
-	private List<Case> cases;
+	@JoinTable(name="case_quantities",
+		joinColumns = {@JoinColumn(name="order_id", referencedColumnName="id")},
+//			@JoinColumn(name="case_id", referencedColumnName="id")}
+		inverseJoinColumns = {@JoinColumn(name="quantity_id", referencedColumnName="id")}
+		)
+	@MapKeyJoinColumn(name="case_id")
+//	@ElementCollection
+//	@CollectionTable(name="quantities")
+//		joinColumns=@JoinColumn(name="order_id", referencedColumnName = "id")
+//		)
+//	@MapKeyJoinColumn(name="case_id", referencedColumnName = "id")
+//	@Column(name="quantity")
+	private Map<Case, Quantity> cases;
 	
 	@Column(name="comments")
 	private String comments;
@@ -28,7 +37,7 @@ public class Order {
 	private double charge;
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
-	@Column(name="date")
+	@Column(name="dt")
 	private Date date;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
@@ -41,12 +50,12 @@ public class Order {
 		super();
 	}
 	
-	public Order(int id, List<Case> cases, String uwagi) {
+	public Order(int id, Map<Case, Quantity> cases, String uwagi) {
 		this.id = id;
 		this.cases = cases;
 		this.comments = uwagi;
-		for(Case skrzynka : cases) {
-			this.charge += skrzynka.getPrice();
+		for(Map.Entry<Case, Quantity> entry : cases.entrySet()) {
+			this.charge += ( entry.getKey().getPrice() * entry.getValue().getQuantity() );
 		}
 		this.orderStatus = OrderStatus.ZAPYTANIE;
 		this.date = new Date();
@@ -62,14 +71,21 @@ public class Order {
 		this.id = id;
 	}
 
-	public List<Case> getCases() {
+	public Map<Case, Quantity> getCases() {
 		if(cases == null) {
-			this.cases = new ArrayList<Case>();
+			this.cases = new HashMap<Case, Quantity>();
 		}
 		return cases;
 	}
 
-	public void setCases(List<Case> cases) {
+	public List<Case> getCaseList(){
+		if(cases == null) {
+			this.cases = new HashMap<Case, Quantity>();
+		}
+		return new ArrayList<>(cases.keySet());
+	}
+
+	public void setCases(Map<Case, Quantity> cases) {
 		this.cases = cases;
 	}
 
@@ -83,8 +99,8 @@ public class Order {
 
 	public double getCharge() {
 		double charge = 0;
-		for(Case tempCase : cases) {
-			charge += tempCase.getPrice();
+		for(Map.Entry<Case, Quantity> entry : cases.entrySet()) {
+			charge += ( entry.getKey().getPrice() * entry.getValue().getQuantity() );
 		}
 		this.charge = charge;
 		return charge;
@@ -125,23 +141,37 @@ public class Order {
 	// Inne metody
 	public boolean addCase(Case skrzynka) {
 		if(cases == null) {
-			this.cases = new ArrayList<Case>();
+			this.cases = new HashMap<Case, Quantity>();
 		}
 		
 		if(skrzynka != null) {
-			cases.add(skrzynka);
+			cases.put(skrzynka, new Quantity(1));
 			return true;
 		}
-		
-		// Not sure if this is good practice
+
 		skrzynka.setOrder(this);
 		
 		return false;
 	}
+
+	public boolean addCase(Case skrzynka, Quantity ilosc) {
+		if(cases == null) {
+			this.cases = new HashMap<Case, Quantity>();
+		}
+
+		if(skrzynka != null && ilosc != null) {
+			cases.put(skrzynka, ilosc);
+			return true;
+		}
+
+		skrzynka.setOrder(this);
+
+		return false;
+	}
 	
 	public boolean deleteCase(int id) {
-		if(id >= 0 && id <= cases.size()) {
-			for(Case case1 : cases) {
+		if(id >= 0) {
+			for(Case case1 : cases.keySet()) {
 				if(case1.getId() == id) {
 					cases.remove(case1);
 					return true;
@@ -150,12 +180,26 @@ public class Order {
 		}
 		return false;
 	}
+
+	public boolean setQuantity(int id, int quantity) {
+		if(id >= 0 && quantity == 0)   deleteCase(id);
+		if(id >= 0 && quantity >= 0) {
+			for(Map.Entry<Case, Quantity> entry : cases.entrySet()) {
+				if(entry.getKey().getId() == id) {
+					entry.getValue().setQuantity(quantity);
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 	
 	public void orderSummary() {
 		System.out.println("Zamówienie nr " + id + "\nZawiera:\n");
-		for(Case case1 : cases) {
+		for(Case case1 : cases.keySet()) {
 			System.out.println(case1.toString());
 		}
 	}
-	
+
+
 }
