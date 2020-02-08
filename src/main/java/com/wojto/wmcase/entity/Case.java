@@ -51,8 +51,7 @@ public class Case {
 	private String comments;
 	@Column(name="price")
 	private double price;
-	
-	// Testing a bi-directional relationship
+
 	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
 						CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinColumn(name="order_id")
@@ -122,7 +121,6 @@ public class Case {
 		this.height = height;
 		this.surface = (this.length * this.width * this.height)/1000000000;
 	}
-	
 
 	public double getSurface() {
 		return surface;

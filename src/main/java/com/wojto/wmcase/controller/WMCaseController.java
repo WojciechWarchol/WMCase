@@ -49,6 +49,9 @@ public class WMCaseController {
 	public String clientOrders(@RequestParam("clientId") int theId, Model theModel) {
 		
 		List<Order> theOrders = service.getOrdersForClient(theId);
+		for (Order theOrder : theOrders) {
+			theOrder.getCharge();
+		}
 		
 		theModel.addAttribute("orders", theOrders);
 		theModel.addAttribute("clientId", theId);
@@ -219,6 +222,8 @@ public class WMCaseController {
 
 		System.out.println("The Order contains: " + theOrder.getCases().toString());
 
+		System.out.println(theCase.getOrder());
+
 		return "redirect:/continueOrder";
 	}
 	
@@ -233,6 +238,8 @@ public class WMCaseController {
 		
 		System.out.println("Executing the continueOrder method");
 		System.out.println(theOrder.getCases().size());
+
+		System.out.println(theOrder.getCaseList().get(0).getOrder());
 		
 		return "new-full-order";
 	}
@@ -288,14 +295,16 @@ public class WMCaseController {
 		
 		System.out.println("The client id is: " + theOrder.getClient().getName());
 		theOrder.setOrderStatus(OrderStatus.ZAPYTANIE);
-		theOrder.setCharge(100);
+		theOrder.getCharge();
 		Client theClient = theOrder.getClient();
 		service.saveClient(theClient);
 		List<Case> caseList = theOrder.getCaseList();
-		for (Case theCase : caseList){
-			service.saveCase(theCase);
-		}
 		service.saveOrder(theOrder);
+//		for (Case theCase : caseList){
+//			service.saveCase(theCase);
+//			System.out.println(theCase.getOrder());
+//		}
+
 		System.out.println("Code got here");
 		return "list-clients";
 	}

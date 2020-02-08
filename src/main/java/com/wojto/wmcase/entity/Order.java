@@ -18,17 +18,12 @@ public class Order {
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinTable(name="case_quantities",
-		joinColumns = {@JoinColumn(name="order_id", referencedColumnName="id")},
-//			@JoinColumn(name="case_id", referencedColumnName="id")}
-		inverseJoinColumns = {@JoinColumn(name="quantity_id", referencedColumnName="id")}
+		joinColumns = {@JoinColumn(name="order_id",
+				referencedColumnName="id")},
+		inverseJoinColumns = {@JoinColumn(name="quantity_id",
+				referencedColumnName="id")}
 		)
 	@MapKeyJoinColumn(name="case_id")
-//	@ElementCollection
-//	@CollectionTable(name="quantities")
-//		joinColumns=@JoinColumn(name="order_id", referencedColumnName = "id")
-//		)
-//	@MapKeyJoinColumn(name="case_id", referencedColumnName = "id")
-//	@Column(name="quantity")
 	private Map<Case, Quantity> cases;
 	
 	@Column(name="comments")
@@ -143,14 +138,14 @@ public class Order {
 		if(cases == null) {
 			this.cases = new HashMap<Case, Quantity>();
 		}
-		
+
+		skrzynka.setOrder(this);
+
 		if(skrzynka != null) {
 			cases.put(skrzynka, new Quantity(1));
 			return true;
 		}
 
-		skrzynka.setOrder(this);
-		
 		return false;
 	}
 
@@ -159,12 +154,12 @@ public class Order {
 			this.cases = new HashMap<Case, Quantity>();
 		}
 
+		skrzynka.setOrder(this);
+
 		if(skrzynka != null && ilosc != null) {
 			cases.put(skrzynka, ilosc);
 			return true;
 		}
-
-		skrzynka.setOrder(this);
 
 		return false;
 	}
@@ -200,6 +195,5 @@ public class Order {
 			System.out.println(case1.toString());
 		}
 	}
-
 
 }

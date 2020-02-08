@@ -39,7 +39,7 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col" colspan="10">Skrzynki</th>
+                    <th scope="col" colspan="11">Skrzynki</th>
                 </tr>
                 <tr>
                     <th scope="col">Wymiary</th>
@@ -51,7 +51,7 @@
                     <th scope="col">Koła</th>
                     <th scope="col">Zamki</th>
                     <th scope="col">Uwagi</th>
-                    <th scope="col">Ilość</th>
+                    <th scope="col" style="width: 10%">Ilość</th>
                     <th scope="col">Akcja</th>
                 </tr>
 
@@ -75,25 +75,30 @@
 
                 <tbody>
                     <tr>
-                        <td> ${tempCase.key.length} x ${tempCase.key.width} x ${tempCase.key.height} mm</td>
-                        <td> ${tempCase.key.type.getType()}</td>
-                        <td> ${tempCase.key.material.getMaterial()}</td>
-                        <td> ${tempCase.key.color.getColor()}</td>
-                        <td> ${tempCase.key.filling.getFilling()}</td>
-                        <td> ${tempCase.key.handle.getHandle()} - ${tempCase.key.getHandleNum() } </td>
-                        <td> ${tempCase.key.getWheels()} - ${tempCase.key.getWheelNum()}</td>
-                        <td> ${tempCase.key.locks.getLocks()} </td>
-                        <td> ${tempCase.key.comments}</td>
-                        <td>
+                        <td class="align-middle"> ${tempCase.key.length} x ${tempCase.key.width} x ${tempCase.key.height} mm</td>
+                        <td class="align-middle"> ${tempCase.key.type.getType()}</td>
+                        <td class="align-middle"> ${tempCase.key.material.getMaterial()}</td>
+                        <td class="align-middle"> ${tempCase.key.color.getColor()}</td>
+                        <td class="align-middle"> ${tempCase.key.filling.getFilling()}</td>
+                        <td class="align-middle"> ${tempCase.key.handle.getHandle()} - ${tempCase.key.getHandleNum() } </td>
+                        <td class="align-middle"> ${tempCase.key.getWheels()} - ${tempCase.key.getWheelNum()}</td>
+                        <td class="align-middle"> ${tempCase.key.locks.getLocks()} </td>
+                        <td class="align-middle"> ${tempCase.key.comments}</td>
+                        <td class="align-middle">
                             <form:form action="updateQuantity" modelAttribute="tempQuantity" method="PUT">
                                 <input name="tempCase" type="hidden" value="${tempCase.key}"/>
-                                <form:input class=""
-                                            path="quantity"
-                                            value="${tempCase.value.quantity}"
-                                            />
-                                <button type="submit" class="btn btn-link my-3" > Zapisz ilość</button>
-                            </form:form></td>
-                        <td>
+                                <div class="input-group input-group-sm">
+                                    <form:input class="form-control"
+                                                path="quantity"
+                                                value="${tempCase.value.quantity}"
+                                                />
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-outline-secondary"> Zapisz ilość</button>
+                                    </div>
+                                </div>
+                            </form:form>
+                        </td>
+                        <td class="align-middle">
                             <a href="${updateLink}">Modyfikuj</a>
                              |
                             <a href="${deleteLink}"

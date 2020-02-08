@@ -1,15 +1,14 @@
 package com.wojto.wmcase.dao;
 
-import java.util.List;
-
+import com.wojto.wmcase.entity.Client;
+import com.wojto.wmcase.entity.Order;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.wojto.wmcase.entity.Client;
-import com.wojto.wmcase.entity.Order;
+import java.util.List;
 
 @Repository
 public class ClientDAOImpl implements ClientDAO {
@@ -47,7 +46,9 @@ public class ClientDAOImpl implements ClientDAO {
 	public List<Order> getOrders(int theId) {
 		
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
+		//TODO Fix querry to fetch new Map held by Order
+		//Order id in Case is not saved
 		Query<Order> theQuery =
 				currentSession.createQuery("SELECT DISTINCT o FROM Order o "
 											+ "JOIN FETCH o.client c "

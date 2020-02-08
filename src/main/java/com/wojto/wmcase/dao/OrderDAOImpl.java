@@ -47,8 +47,12 @@ public class OrderDAOImpl implements OrderDAO {
 	public void saveOrder(Order theOrder) {
 		
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		currentSession.saveOrUpdate(theOrder);
+		List<Case> caseList = theOrder.getCaseList();
+		for (Case theCase : caseList){
+			currentSession.saveOrUpdate(theCase);
+		}
 		
 	}
 
