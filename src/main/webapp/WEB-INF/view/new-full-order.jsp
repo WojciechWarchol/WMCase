@@ -58,7 +58,7 @@
             <c:forEach var="tempCase" items="${order.getCases()}">
 
             <!-- Update case, quantity and delete Links -->
-            <c:url var="updateQuantityLink" value="/updateQuantity">
+            <c:url var="updateQuantityLink" value="/updateQuantityInClientOrder">
                 <c:param name="tempCase" value="${tempCase}"/>
                 <c:param name="order" value="${order}"/>
             </c:url>
@@ -85,7 +85,7 @@
                         <td class="align-middle"> ${tempCase.key.locks.getLocks()} </td>
                         <td class="align-middle"> ${tempCase.key.comments}</td>
                         <td class="align-middle">
-                            <form:form action="updateQuantity" modelAttribute="tempQuantity" method="PUT">
+                            <form:form action="updateQuantityInClientOrder" modelAttribute="tempQuantity" method="PUT">
                                 <input name="tempCase" type="hidden" value="${tempCase.key}"/>
                                 <div class="input-group input-group-sm">
                                     <form:input class="form-control"

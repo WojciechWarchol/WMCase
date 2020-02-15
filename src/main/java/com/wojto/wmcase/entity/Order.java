@@ -15,8 +15,9 @@ public class Order {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
-	
-	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+
+	//TODO This should probably not be left as EAGER
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name="case_quantities",
 		joinColumns = {@JoinColumn(name="order_id",
 				referencedColumnName="id")},
