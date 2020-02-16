@@ -49,6 +49,9 @@ public class WMCaseController {
 	public String clientOrders(@RequestParam("clientId") int theId, Model theModel) {
 		
 		List<Order> theOrders = service.getOrdersForClient(theId);
+		for (Order theOrder : theOrders) {
+			theOrder.getCharge();
+		}
 		
 		theModel.addAttribute("orders", theOrders);
 		theModel.addAttribute("clientId", theId);
@@ -77,13 +80,15 @@ public class WMCaseController {
 	public String updateOrder(@RequestParam("orderId") int theId, 
 							  @RequestParam("clientId") int clientId,
 								Model theModel) {
-		
-		List<Case> theCases = service.getCasesForOrder(theId);
-		
-		theModel.addAttribute("cases", theCases);
+
+		Order theOrder = service.getOrder(theId);
+		Quantity tempQuantity = new Quantity();
+
+		theModel.addAttribute("order", theOrder);
 		theModel.addAttribute("orderId", theId);
 		theModel.addAttribute("clientId", clientId);
-		System.out.println("The Case Id is: " + theId);
+		theModel.addAttribute("tempQuantity", tempQuantity);
+		System.out.println("The Order Id is: " + theId);
 		
 		return "list-cases";
 	}
@@ -104,8 +109,10 @@ public class WMCaseController {
 		
 		List<Case> theCases = 
 				service.getAllCases();
+		Quantity tempQuantity = new Quantity();
 		
 		theModel.addAttribute("cases", theCases);
+		theModel.addAttribute("tempQuantity", tempQuantity);
 		
 		return "list-cases";
 	}
@@ -139,6 +146,25 @@ public class WMCaseController {
 		
 		return "new-case";
 	}
+
+	@PostMapping("/updateQuantity")
+	public String updateQuantity(@ModelAttribute("tempQuantity") Quantity tempQuantity,
+								 @ModelAttribute("tempCase") String tempCaseString,
+								 @RequestParam("orderId") int orderId,
+								 @RequestParam("clientId") int clientId,
+								 Model theModel) {
+
+		Order theOrder = service.getOrder(orderId);
+		Case theCase = service.findCaseInOrder(theOrder, tempCaseString);
+		theOrder.getCases().get(theCase).setQuantity(tempQuantity.getQuantity());
+
+		service.saveOrder(theOrder);
+		theModel.addAttribute("orderId", orderId);
+		theModel.addAttribute("clientId", clientId);
+
+
+		return "redirect:/updateOrder";
+	}
 	
 	@PostMapping("/saveCase")
 	public String saveCase(@ModelAttribute("case") Case theCase,
@@ -168,7 +194,7 @@ public class WMCaseController {
 		return "redirect:/updateOrder";
 	}
 
-	/*
+	/**
 	 * Client side Methods
 	 */
 	
@@ -181,7 +207,6 @@ public class WMCaseController {
 		Client theClient = new Client();
 		theOrder.setClient(theClient);
 		theOrder.setDate(new Date());
-//		theClient.getOrders().add(theOrder);
 		
 		theModel.addAttribute("order", theOrder);
 		theModel.addAttribute("client", theClient);
@@ -219,6 +244,8 @@ public class WMCaseController {
 
 		System.out.println("The Order contains: " + theOrder.getCases().toString());
 
+		System.out.println(theCase.getOrder());
+
 		return "redirect:/continueOrder";
 	}
 	
@@ -237,11 +264,11 @@ public class WMCaseController {
 		return "new-full-order";
 	}
 
-	@PostMapping("/updateQuantity")
-	public String updateQuantity(@ModelAttribute("tempQuantity") Quantity tempQuantity,
-								 @ModelAttribute("tempCase") String tempCaseString,
-								 @ModelAttribute("order") Order theOrder,
-								 Model theModel) {
+	@PostMapping("/updateQuantityInClientOrder")
+	public String updateQuantityOfCase(@ModelAttribute("tempQuantity") Quantity tempQuantity,
+									   @ModelAttribute("tempCase") String tempCaseString,
+									   @ModelAttribute("order") Order theOrder,
+									   Model theModel) {
 
 		Case theCase = service.findCaseInOrder(theOrder, tempCaseString);
 		theOrder.getCases().get(theCase).setQuantity(tempQuantity.getQuantity());
@@ -288,14 +315,16 @@ public class WMCaseController {
 		
 		System.out.println("The client id is: " + theOrder.getClient().getName());
 		theOrder.setOrderStatus(OrderStatus.ZAPYTANIE);
-		theOrder.setCharge(100);
+		theOrder.getCharge();
 		Client theClient = theOrder.getClient();
 		service.saveClient(theClient);
 		List<Case> caseList = theOrder.getCaseList();
-		for (Case theCase : caseList){
-			service.saveCase(theCase);
-		}
 		service.saveOrder(theOrder);
+//		for (Case theCase : caseList){
+//			service.saveCase(theCase);
+//			System.out.println(theCase.getOrder());
+//		}
+
 		System.out.println("Code got here");
 		return "list-clients";
 	}
