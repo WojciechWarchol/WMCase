@@ -196,9 +196,7 @@ public class Case {
 	}
 
 	public void setWheelNum(int wheelNum) {
-		if (this.wheels) {
 		this.wheelNum = wheelNum;
-		} 
 	}
 
 	public Locks getLocks() {

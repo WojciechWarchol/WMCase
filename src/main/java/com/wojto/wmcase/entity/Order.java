@@ -74,11 +74,21 @@ public class Order {
 		return cases;
 	}
 
-	public List<Case> getCaseList(){
+	public List<Case> getCaseList() {
 		if(cases == null) {
 			this.cases = new HashMap<Case, Quantity>();
 		}
 		return new ArrayList<>(cases.keySet());
+	}
+
+	public int getCaseTotalQuantity() {
+		int total = 0;
+		if(cases != null) {
+			for(Case theCase : cases.keySet()) {
+				total += cases.get(theCase).getQuantity();
+			}
+		}
+		return total;
 	}
 
 	public void setCases(Map<Case, Quantity> cases) {

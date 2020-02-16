@@ -44,7 +44,7 @@ CREATE TABLE `cases` (
 	`handle` varchar(40) ,
 	`handle_num` int NOT NULL,
 	`wheels` boolean DEFAULT false,
-	`wheel_num` int DEFAULT 0,
+	`wheel_num` int NOT NULL,
 	`locks` varchar(40) ,
 	`comments` text,
 	`price` decimal(9,2) NOT NULL,

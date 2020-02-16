@@ -80,12 +80,10 @@ public class WMCaseController {
 	public String updateOrder(@RequestParam("orderId") int theId, 
 							  @RequestParam("clientId") int clientId,
 								Model theModel) {
-		
-//		List<Case> theCases = service.getCasesForOrder(theId);
+
 		Order theOrder = service.getOrder(theId);
 		Quantity tempQuantity = new Quantity();
-		
-//		theModel.addAttribute("cases", theCases);
+
 		theModel.addAttribute("order", theOrder);
 		theModel.addAttribute("orderId", theId);
 		theModel.addAttribute("clientId", clientId);
@@ -149,7 +147,7 @@ public class WMCaseController {
 		return "new-case";
 	}
 
-	@GetMapping("/updateQuantity")
+	@PostMapping("/updateQuantity")
 	public String updateQuantity(@ModelAttribute("tempQuantity") Quantity tempQuantity,
 								 @ModelAttribute("tempCase") String tempCaseString,
 								 @RequestParam("orderId") int orderId,

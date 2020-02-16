@@ -56,7 +56,7 @@
 					<tr>
 						<td> ${tempOrder.date}</td>
 						<td> ${tempOrder.id}</td>
-						<td> ${tempOrder.getCases().size()}</td>
+						<td> ${tempOrder.getCaseTotalQuantity()}</td>
 						<td> ${tempOrder.comments}</td>
 						<td> ${tempOrder.charge}</td>
 						<td> ${tempOrder.getOrderStatus()}</td>

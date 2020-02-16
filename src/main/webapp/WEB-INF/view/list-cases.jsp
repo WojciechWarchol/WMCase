@@ -102,6 +102,8 @@
 						<td>
                             <form:form action="updateQuantity" modelAttribute="tempQuantity" method="PUT">
                                 <input name="tempCase" type="hidden" value="${tempCase.key}"/>
+                                <input name="orderId" type="hidden" value="${orderId}"/>
+                                <input name="clientId" type="hidden" value="${clientId}"/>
                                 <div class="input-group input-group-sm">
                                     <form:input class="form-control"
                                                 path="quantity"
