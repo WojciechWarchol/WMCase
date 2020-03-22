@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.wojto</groupId>
   <artifactId>wmcase</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>WMcase Maven Webapp</name>
   
@@ -22,6 +22,7 @@
 	<properties>
 		<springframework.version>5.2.3.RELEASE</springframework.version>
 		<springsecurity.version>5.1.4.RELEASE</springsecurity.version>
+		<tomcat.version>9.0.30</tomcat.version>
 
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -78,6 +79,13 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${springsecurity.version}</version>
 		</dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--			<version>2.2.4.RELEASE</version>-->
+<!--			<scope>compile</scope>-->
+<!--		</dependency>-->
 	
 		<!-- Hibernate -->
 		<dependency>
@@ -130,9 +138,24 @@
 
 		<!-- Embedded Tomcat -->
 		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>9.0.30</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>9.0.30</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<version>9.0.30</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-logging-juli</artifactId>
+			<version>9.0.0.M6</version>
 		</dependency>
 		  
 		
@@ -152,12 +175,96 @@
 	
 		<pluginManagement>
 			<plugins>
+<!--				<plugin>-->
+<!--					&lt;!&ndash;  Add Maven coordinates for: maven-war-plugin &ndash;&gt;-->
+<!--					<groupId>org.apache.maven.plugins</groupId>-->
+<!--					<artifactId>maven-war-plugin</artifactId>-->
+<!--					<version>3.2.2</version>-->
+<!--				</plugin>-->
 				<plugin>
-					<!--  Add Maven coordinates for: maven-war-plugin -->
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>3.2.2</version>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>3.2.1</version>
+					<configuration>
+						<createDependencyReducedPom>true</createDependencyReducedPom>
+						<filters>
+							<filter>
+								<artifact>*:*</artifact>
+								<excludes>
+									<exclude>META-INF/*.SF</exclude>
+									<exclude>META-INF/*.DSA</exclude>
+									<exclude>META-INF/*.RSA</exclude>
+								</excludes>
+							</filter>
+						</filters>
+
+					</configuration>
+
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>shade</goal>
+							</goals>
+							<configuration>
+								<shadedArtifactAttached>true</shadedArtifactAttached>
+								<transformers>
+<!--									<transformer-->
+<!--											implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />-->
+									<transformer
+											implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+										<manifestEntries>
+											<Main-Class>com.wojto.wmcase.application.Application</Main-Class>
+										</manifestEntries>
+									</transformer>
+								</transformers>
+							</configuration>
+						</execution>
+					</executions>
 				</plugin>
+
+<!--				<plugin>-->
+<!--					<groupId>org.apache.maven.plugins</groupId>-->
+<!--					<artifactId>maven-compiler-plugin</artifactId>-->
+<!--					<version>3.8.1</version>-->
+<!--					<configuration>-->
+<!--						<source>1.8</source>-->
+<!--						<target>1.8</target>-->
+<!--					</configuration>-->
+<!--				</plugin>-->
+<!--				<plugin>-->
+<!--					<artifactId>maven-assembly-plugin</artifactId>-->
+<!--					<executions>-->
+<!--						<execution>-->
+<!--							<phase>package</phase>-->
+<!--							<goals>-->
+<!--								<goal>single</goal>-->
+<!--							</goals>-->
+<!--						</execution>-->
+<!--					</executions>-->
+<!--					<configuration>-->
+<!--						<descriptorRefs>-->
+<!--							<descriptorRef>jar-with-dependencies</descriptorRef>-->
+<!--						</descriptorRefs>-->
+<!--					</configuration>-->
+<!--				</plugin>-->
+<!--				<plugin>-->
+<!--					<groupId>org.apache.maven.plugins</groupId>-->
+<!--					<artifactId>maven-jar-plugin</artifactId>-->
+<!--					<configuration>-->
+<!--						<archive>-->
+<!--							<manifest>-->
+<!--								<addClasspath>true</addClasspath>-->
+<!--								<classpathPrefix>lib/</classpathPrefix>-->
+<!--								<mainClass>com.wojto.wmcase.application.Application</mainClass>-->
+<!--							</manifest>-->
+<!--						</archive>-->
+<!--					</configuration>-->
+<!--				</plugin>-->
+<!--				<plugin>-->
+<!--					<groupId>org.springframework.boot</groupId>-->
+<!--					<artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--				</plugin>-->
 			</plugins>
 		</pluginManagement>
 	
